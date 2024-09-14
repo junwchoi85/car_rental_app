@@ -1,3 +1,4 @@
+import 'package:car_rental_app/core/services/router.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,23 +47,7 @@ class _MainAppState extends State<MainApp> {
         ),
       ),
       themeMode: systemThemeMode,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Car Rental App'),
-        ),
-        body: const Center(
-          child: Text('Hello World!'),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          child: Container(
-            height: 50,
-            color: Theme.of(context).colorScheme.secondary,
-            child: const Center(
-              child: Text('BottomAppBar'),
-            ),
-          ),
-        ),
-      ),
+      onGenerateRoute: generateRoute,
     );
   }
 }
