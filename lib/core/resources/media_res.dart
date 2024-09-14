@@ -9,4 +9,9 @@ class MediaRes {
 
   static const pageUnderConstruction =
       '$_baseLottie/page_under_construction.json';
+
+  // images
+  static const onBordingContent1 = '$_baseImage/image1.png';
+  static const onBordingContent2 = '$_baseImage/image2.png';
+  static const onBordingContent3 = '$_baseImage/image3.png';
 }
