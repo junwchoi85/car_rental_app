@@ -25,7 +25,7 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    const FlexScheme usedFlexScheme = FlexScheme.amber;
+    const FlexScheme usedFlexScheme = FlexScheme.bigStone;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

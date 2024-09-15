@@ -41,7 +41,7 @@ class OnBoardingBody extends StatelessWidget {
                     horizontal: 50,
                     vertical: 17,
                   ),
-                  // backgroundColor: Colours.primaryColour,
+                  backgroundColor: context.theme.colorScheme.secondary,
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () {
