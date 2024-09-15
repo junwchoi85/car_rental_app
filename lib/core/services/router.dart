@@ -29,8 +29,10 @@ PageRouteBuilder<dynamic> _pageBuilder(
 }) {
   return PageRouteBuilder(
     settings: settings,
-    transitionsBuilder: (_, animation, __, child) =>
-        FadeTransition(opacity: animation, child: child),
+    transitionsBuilder: (_, animation, __, child) => FadeTransition(
+      opacity: animation,
+      child: child,
+    ),
     pageBuilder: (context, _, __) => page(context),
   );
 }
