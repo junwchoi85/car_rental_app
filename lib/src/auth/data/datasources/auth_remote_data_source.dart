@@ -1,8 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:car_rental_app/core/common/enums/update_user.dart';
+import 'package:car_rental_app/core/errors/exception.dart';
+import 'package:car_rental_app/core/utils/constants.dart';
+import 'package:car_rental_app/core/utils/typedefs.dart';
 import 'package:car_rental_app/src/auth/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class AuthRemoteDataSource {
   const AuthRemoteDataSource();
@@ -40,31 +47,182 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseStorage _dbClient;
 
   @override
-  Future<void> forgotPassword(String email) {
-    // TODO: implement forgotPassword
-    throw UnimplementedError();
+  Future<void> forgotPassword(String email) async {
+    try {
+      await _authClient.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Error Occurred',
+        statusCode: e.code,
+      );
+    } catch (e, s) {
+      debugPrintStack(stackTrace: s);
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '505',
+      );
+    }
   }
 
   @override
-  Future<LocalUserModel> signIn(
-      {required String email, required String password}) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<LocalUserModel> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final result = await _authClient.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      final user = result.user;
+
+      if (user == null) {
+        throw const ServerException(
+          message: 'Please try again later',
+          statusCode: 'Unknown Error',
+        );
+      }
+
+      var userData = await _getUserData(user.uid);
+
+      if (userData.exists) {
+        return LocalUserModel.fromMap(userData.data()!);
+      }
+
+      await _setUserData(user, email);
+
+      userData = await _getUserData(user.uid);
+      return LocalUserModel.fromMap(userData.data()!);
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Error Occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e, s) {
+      debugPrintStack(stackTrace: s);
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '505',
+      );
+    }
   }
 
   @override
-  Future<void> signUp(
-      {required String email,
-      required String password,
-      required String fullName}) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+  Future<void> signUp({
+    required String email,
+    required String password,
+    required String fullName,
+  }) async {
+    try {
+      final userCredential = await _authClient.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      await userCredential.user!.updateDisplayName(fullName);
+      await userCredential.user!.updatePhotoURL(kDefaultAvatar);
+      await _setUserData(_authClient.currentUser!, email);
+    } on FirebaseAuthException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Error Occurred',
+        statusCode: e.code,
+      );
+    } catch (e, s) {
+      debugPrintStack(stackTrace: s);
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '505',
+      );
+    }
   }
 
   @override
   Future<void> updateUser(
-      {required UpdateUserAction action, required userData}) {
-    // TODO: implement updateUser
-    throw UnimplementedError();
+      {required UpdateUserAction action, required userData}) async {
+    try {
+      switch (action) {
+        case UpdateUserAction.email:
+          await _authClient.currentUser
+              ?.verifyBeforeUpdateEmail(userData as String);
+          await _updateUserData({'email': userData});
+        case UpdateUserAction.displayName:
+          await _authClient.currentUser?.updateDisplayName(userData as String);
+          await _updateUserData({'fullName': userData});
+        case UpdateUserAction.profilePic:
+          final ref = _dbClient
+              .ref()
+              .child('profile_pics/${_authClient.currentUser?.uid}');
+
+          await ref.putFile(userData as File);
+          final url = await ref.getDownloadURL();
+          await _authClient.currentUser?.updatePhotoURL(url);
+          await _updateUserData({'profilePic': url});
+        case UpdateUserAction.password:
+          if (_authClient.currentUser?.email == null) {
+            throw const ServerException(
+              message: 'User does not exist',
+              statusCode: 'Insufficient Permission',
+            );
+          }
+          final newData = jsonDecode(userData as String) as DataMap;
+          await _authClient.currentUser?.reauthenticateWithCredential(
+            EmailAuthProvider.credential(
+              email: _authClient.currentUser!.email!,
+              password: newData['oldPassword'] as String,
+            ),
+          );
+          await _authClient.currentUser?.updatePassword(
+            newData['newPassword'] as String,
+          );
+      }
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Error Occurred',
+        statusCode: e.code,
+      );
+    } catch (e, s) {
+      debugPrintStack(stackTrace: s);
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '505',
+      );
+    }
+  }
+
+  /// Set user data to firestore
+  /// If user data is not available, use fallback email
+  /// to set user data
+  /// [user] User object
+  /// [fallbackEmail] Fallback email
+  /// [return] Future<void>
+  Future<void> _setUserData(
+    User user,
+    String fallbackEmail,
+  ) async {
+    await _cloudStoreClient.collection('users').doc(user.uid).set(
+          LocalUserModel(
+            uid: user.uid,
+            email: user.email ?? fallbackEmail,
+            fullName: user.displayName ?? '',
+            profilePic: user.photoURL ?? '',
+            points: 0,
+          ).toMap(),
+        );
+  }
+
+  /// Get user data from firestore
+  /// [uid] User id
+  /// [return] Future<DocumentSnapshot<DataMap>>
+  Future<DocumentSnapshot<DataMap>> _getUserData(String uid) async {
+    return _cloudStoreClient.collection('users').doc(uid).get();
+  }
+
+  Future<void> _updateUserData(DataMap data) async {
+    await _cloudStoreClient
+        .collection('users')
+        .doc(_authClient.currentUser?.uid)
+        .update(data);
   }
 }

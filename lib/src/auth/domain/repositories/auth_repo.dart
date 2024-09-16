@@ -12,7 +12,7 @@ abstract class AuthRepo {
     required String password,
   });
 
-  ResultFuture<LocalUser> signUp({
+  ResultFuture<void> signUp({
     required String email,
     required String password,
     required String fullName,
