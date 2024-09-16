@@ -31,6 +31,7 @@ dev_dependencies:
   firebase_storage_mocks: ^0.7.0
   fake_cloud_firestore: ^3.0.2
   firebase_auth_mocks: ^0.14.1
+  bloc_test: ^9.1.7
 
 flutter:
   uses-material-design: true
