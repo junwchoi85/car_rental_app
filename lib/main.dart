@@ -1,5 +1,7 @@
 import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/core/services/router.dart';
+import 'package:car_rental_app/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await init();
   runApp(const MainApp());
 }
