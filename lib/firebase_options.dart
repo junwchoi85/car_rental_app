@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -50,21 +47,32 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDQGk9LKrmb0Z5lqXGpajCUMs8TkRUoMYE',
-    appId: '1:82345376775:android:9590c0c7cc8c7c3a51bea2',
-    messagingSenderId: '82345376775',
-    projectId: 'education-app-8d22d',
-    storageBucket: 'education-app-8d22d.appspot.com',
+    apiKey: 'AIzaSyBcm_pCFw4uC6Y_2cw6d7DI_eU08RWzAWc',
+    appId: '1:541350283571:android:d7e039b65f1648267bd646',
+    messagingSenderId: '541350283571',
+    projectId: 'car-rental-app-8253b',
+    databaseURL: 'https://car-rental-app-8253b-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'car-rental-app-8253b.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB5OewkoTew0NvsibcoAP8WzPMWeEw0D6c',
-    appId: '1:82345376775:ios:2105835aad4a032551bea2',
-    messagingSenderId: '82345376775',
-    projectId: 'education-app-8d22d',
-    storageBucket: 'education-app-8d22d.appspot.com',
-    iosClientId:
-        '82345376775-thpugduk7690h3g7q7kh4cpd3u4gron3.apps.googleusercontent.com',
-    iosBundleId: 'com.dbestech.educationApp',
+    apiKey: 'AIzaSyAvDNJD-rpm5hZiKNbWkgpnbhvcEqu-kCw',
+    appId: '1:541350283571:ios:aced5d382dfce39a7bd646',
+    messagingSenderId: '541350283571',
+    projectId: 'car-rental-app-8253b',
+    databaseURL: 'https://car-rental-app-8253b-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'car-rental-app-8253b.appspot.com',
+    iosBundleId: 'com.example.carRentalApp',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDLpctf10-F4I8ILGGsE7vLThFp2H0BEmM',
+    appId: '1:541350283571:web:eb6b94c80f2a66c97bd646',
+    messagingSenderId: '541350283571',
+    projectId: 'car-rental-app-8253b',
+    authDomain: 'car-rental-app-8253b.firebaseapp.com',
+    databaseURL: 'https://car-rental-app-8253b-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'car-rental-app-8253b.appspot.com',
+  );
+
 }

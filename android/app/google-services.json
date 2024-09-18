@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "541350283571",
+    "firebase_url": "https://car-rental-app-8253b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "car-rental-app-8253b",
+    "storage_bucket": "car-rental-app-8253b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541350283571:android:d7e039b65f1648267bd646",
+        "android_client_info": {
+          "package_name": "io.mse.car"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcm_pCFw4uC6Y_2cw6d7DI_eU08RWzAWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
