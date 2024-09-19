@@ -1,6 +1,5 @@
 import 'package:car_rental_app/core/common/widgets/founded_button.dart';
 import 'package:car_rental_app/core/common/widgets/gradient_background.dart';
-import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/utils/core_utils.dart';
 import 'package:car_rental_app/src/auth/presentation/bloc/auth_bloc.dart';

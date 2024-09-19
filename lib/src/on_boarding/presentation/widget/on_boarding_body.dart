@@ -37,26 +37,26 @@ class OnBoardingBody extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 14),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 50,
-                    vertical: 17,
-                  ),
-                  backgroundColor: context.theme.colorScheme.secondary,
-                  foregroundColor: Colors.white,
-                ),
-                onPressed: () {
-                  context.read<OnBoardingCubit>().cacheFirstTimer();
-                },
-                child: const Text(
-                  'Get Started',
-                  style: TextStyle(
-                      // fontFamily: Fonts.aeonik,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              )
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     padding: const EdgeInsets.symmetric(
+              //       horizontal: 50,
+              //       vertical: 17,
+              //     ),
+              //     backgroundColor: context.theme.colorScheme.secondary,
+              //     foregroundColor: Colors.white,
+              //   ),
+              //   onPressed: () {
+              //     context.read<OnBoardingCubit>().cacheFirstTimer();
+              //   },
+              //   child: const Text(
+              //     'Get Started',
+              //     style: TextStyle(
+              //         // fontFamily: Fonts.aeonik,
+              //         fontWeight: FontWeight.bold,
+              //         color: Colors.black),
+              //   ),
+              // )
             ],
           ),
         )

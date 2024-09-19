@@ -1,5 +1,6 @@
 import 'package:car_rental_app/core/common/views/loading_view.dart';
 import 'package:car_rental_app/core/common/widgets/gradient_background.dart';
+import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/src/on_boarding/domain/entities/page_content.dart';
 import 'package:car_rental_app/src/on_boarding/presentation/cubit/on_boarding_cubit.dart';
@@ -73,6 +74,32 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       spacing: 40,
                       // activeDotColor: Colours.primaryColour,
                       dotColor: Colors.grey,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 50,
+                          vertical: 17,
+                        ),
+                        backgroundColor: context.theme.colorScheme.secondary,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        context.read<OnBoardingCubit>().cacheFirstTimer();
+                      },
+                      child: const Text(
+                        'Get Started',
+                        style: TextStyle(
+                            // fontFamily: Fonts.aeonik,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
                     ),
                   ),
                 ),
