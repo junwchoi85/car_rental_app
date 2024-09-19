@@ -57,7 +57,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ],
                 ),
                 Align(
-                  alignment: const Alignment(0, .18),
+                  alignment: const Alignment(0, .27),
                   child: SmoothPageIndicator(
                     controller: pageController,
                     count: 3,
