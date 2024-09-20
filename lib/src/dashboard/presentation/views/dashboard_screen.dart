@@ -1,8 +1,8 @@
 import 'package:car_rental_app/core/common/app/providers/user_provider.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/src/auth/data/models/user_model.dart';
-import 'package:car_rental_app/src/dashboard/providers/dashboard_controller.dart';
-import 'package:car_rental_app/src/dashboard/utils/dashboard_utils.dart';
+import 'package:car_rental_app/src/dashboard/presentation/providers/dashboard_controller.dart';
+import 'package:car_rental_app/src/dashboard/presentation/utils/dashboard_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

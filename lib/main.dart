@@ -2,7 +2,7 @@ import 'package:car_rental_app/core/common/app/providers/user_provider.dart';
 import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/core/services/router.dart';
 import 'package:car_rental_app/firebase_options.dart';
-import 'package:car_rental_app/src/dashboard/providers/dashboard_controller.dart';
+import 'package:car_rental_app/src/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
