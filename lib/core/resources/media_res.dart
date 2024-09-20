@@ -11,6 +11,8 @@ class MediaRes {
       '$_baseLottie/page_under_construction.json';
   static const authGradientBackground =
       '$_baseImage/auth_gradient_background.png';
+  static const defaultGradientBackground =
+      '$_baseImage/default_gradient_background.png';
 
   // images
   static const onBordingContent1 = '$_baseImage/image1.png';
