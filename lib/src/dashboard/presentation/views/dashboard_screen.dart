@@ -55,7 +55,7 @@ class _DashboardState extends State<Dashboard> {
                     color: controller.currentIndex == 0
                         ? context.theme.primaryColor
                         : Colors.grey,
-                    size: controller.currentIndex == 0 ? 30 : 24,
+                    // size: controller.currentIndex == 0 ? 30 : 24,
                   ),
                   label: 'Home',
                   backgroundColor: Colors.white,
@@ -66,7 +66,7 @@ class _DashboardState extends State<Dashboard> {
                     color: controller.currentIndex == 1
                         ? context.theme.primaryColor
                         : Colors.grey,
-                    size: controller.currentIndex == 1 ? 30 : 24,
+                    // size: controller.currentIndex == 1 ? 30 : 24,
                   ),
                   label: 'Home',
                   backgroundColor: Colors.white,
@@ -77,7 +77,7 @@ class _DashboardState extends State<Dashboard> {
                     color: controller.currentIndex == 2
                         ? context.theme.primaryColor
                         : Colors.grey,
-                    size: controller.currentIndex == 2 ? 30 : 24,
+                    // size: controller.currentIndex == 2 ? 30 : 24,
                   ),
                   label: 'Home',
                   backgroundColor: Colors.white,
@@ -88,7 +88,7 @@ class _DashboardState extends State<Dashboard> {
                     color: controller.currentIndex == 3
                         ? context.theme.primaryColor
                         : Colors.grey,
-                    size: controller.currentIndex == 3 ? 30 : 24,
+                    // size: controller.currentIndex == 3 ? 30 : 24,
                   ),
                   label: 'Home',
                   backgroundColor: Colors.white,
