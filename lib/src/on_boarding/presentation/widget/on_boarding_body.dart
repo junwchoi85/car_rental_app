@@ -1,8 +1,6 @@
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/src/on_boarding/domain/entities/page_content.dart';
-import 'package:car_rental_app/src/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardingBody extends StatelessWidget {
   const OnBoardingBody({super.key, required this.pageContent});

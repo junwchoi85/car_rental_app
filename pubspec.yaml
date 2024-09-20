@@ -25,6 +25,7 @@ dependencies:
   provider: ^6.1.2
   shared_preferences: ^2.3.2
   smooth_page_indicator: ^1.2.0+3
+  uuid: ^4.5.0
   very_good_analysis: ^6.0.0
 
 dev_dependencies:
