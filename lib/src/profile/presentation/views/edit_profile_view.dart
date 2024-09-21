@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:car_rental_app/core/common/enums/update_user.dart';
 import 'package:car_rental_app/core/common/widgets/gradient_background.dart';
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/utils/core_utils.dart';
+import 'package:car_rental_app/src/auth/domain/usecases/update_user.dart';
 import 'package:car_rental_app/src/auth/presentation/bloc/auth_bloc.dart';
+import 'package:car_rental_app/src/profile/presentation/widgets/edit_profile_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -66,10 +70,143 @@ class _EditProfileViewState extends State<EditProfileView> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             leading: const NestedBackButton(),
+            title: const Text(
+              'Edit Profile',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  if (nothingChanged) context.pop();
+                  final bloc = context.read<AuthBloc>();
+                  if (passwordChanged) {
+                    if (oldPasswordController.text.trim().isNotEmpty) {
+                      CoreUtils.showSnackBar(
+                        context,
+                        'Please enter your old password',
+                      );
+                      return;
+                    }
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.password,
+                        userData: jsonEncode({
+                          'oldPassword': oldPasswordController.text.trim(),
+                          'newPassword': passwordController.text.trim(),
+                        }),
+                      ),
+                    );
+                  }
+                  if (nameChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.displayName,
+                        userData: fullNameController.text.trim(),
+                      ),
+                    );
+                  }
+                  if (emailChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.email,
+                        userData: emailController.text.trim(),
+                      ),
+                    );
+                  }
+                  if (imageChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.profilePic,
+                        userData: pickedImage,
+                      ),
+                    );
+                  }
+                },
+                child: state is AuthLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : StatefulBuilder(builder: (_, refresh) {
+                        fullNameController.addListener(() => refresh(() {}));
+                        emailController.addListener(() => refresh(() {}));
+                        passwordController.addListener(() => refresh(() {}));
+
+                        return Text(
+                          'Done',
+                          style: TextStyle(
+                            color: nothingChanged
+                                ? context.theme.primaryColor
+                                : Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }),
+              ),
+            ],
           ),
           body: GradientBackground(
-            child: ListView(),
             image: MediaRes.defaultGradientBackground,
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              children: [
+                Builder(builder: (context) {
+                  final user = context.currentUser!;
+                  final userImage =
+                      user.profilePic == null || user.profilePic!.isEmpty
+                          ? null
+                          : user.profilePic;
+                  return CircleAvatar(
+                    radius: 50,
+                    backgroundImage: pickedImage != null
+                        ? FileImage(pickedImage!)
+                        : userImage != null
+                            ? NetworkImage(userImage)
+                            : const AssetImage(MediaRes.emptyAvatar)
+                                as ImageProvider,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon((pickedImage != null || userImage != null)
+                              ? Icons.edit
+                              : Icons.add_a_photo),
+                          onPressed: pickImage,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'We recommend an image of at least 400X400',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                EditProfileForm(
+                  fullNameController: fullNameController,
+                  emailController: emailController,
+                  passwordController: passwordController,
+                  oldPasswordController: oldPasswordController,
+                ),
+              ],
+            ),
           ),
         );
       },
