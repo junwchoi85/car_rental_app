@@ -18,4 +18,5 @@ class MediaRes {
   static const onBordingContent1 = '$_baseImage/image1.png';
   static const onBordingContent2 = '$_baseImage/image2.png';
   static const onBordingContent3 = '$_baseImage/image3.png';
+  static const emptyAvatar = '$_baseImage/empty_avatar.png';
 }

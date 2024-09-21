@@ -23,7 +23,7 @@ class LocalUser extends Equatable {
   final String? profilePic;
 
   @override
-  List<Object?> get props => [uid, email];
+  List<Object?> get props => [uid, email, profilePic, fullName];
 
   @override
   String toString() {
