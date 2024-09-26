@@ -7,7 +7,6 @@ import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/utils/core_utils.dart';
-import 'package:car_rental_app/src/auth/domain/usecases/update_user.dart';
 import 'package:car_rental_app/src/auth/presentation/bloc/auth_bloc.dart';
 import 'package:car_rental_app/src/profile/presentation/widgets/edit_profile_form.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +82,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   if (nothingChanged) context.pop();
                   final bloc = context.read<AuthBloc>();
                   if (passwordChanged) {
-                    if (oldPasswordController.text.trim().isNotEmpty) {
+                    if (oldPasswordController.text.trim().isEmpty) {
                       CoreUtils.showSnackBar(
                         context,
                         'Please enter your old password',
@@ -202,8 +201,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                 EditProfileForm(
                   fullNameController: fullNameController,
                   emailController: emailController,
-                  passwordController: passwordController,
                   oldPasswordController: oldPasswordController,
+                  passwordController: passwordController,
                 ),
               ],
             ),

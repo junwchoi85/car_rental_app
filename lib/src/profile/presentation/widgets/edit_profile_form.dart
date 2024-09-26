@@ -8,14 +8,14 @@ class EditProfileForm extends StatelessWidget {
     super.key,
     required this.fullNameController,
     required this.emailController,
-    required this.passwordController,
     required this.oldPasswordController,
+    required this.passwordController,
   });
 
   final TextEditingController fullNameController;
   final TextEditingController emailController;
-  final TextEditingController passwordController;
   final TextEditingController oldPasswordController;
+  final TextEditingController passwordController;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class EditProfileForm extends StatelessWidget {
           fieldTitle: 'Email',
           controller: emailController,
           hintText: context.currentUser!.email.obscureEmail,
+          readOnly: true,
         ),
         EditProfileFormField(
           fieldTitle: 'Current Password',
