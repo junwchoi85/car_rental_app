@@ -7,6 +7,8 @@ final sl = GetIt.instance;
 Future<void> init() async {
   await _onBoardingInit();
   await _initAuth();
+  await _initHttp();
+  await _initCarListing();
 }
 
 Future<void> _onBoardingInit() async {
@@ -25,6 +27,10 @@ Future<void> _onBoardingInit() async {
       () => OnBoardingLocalDataSourceImpl(sharedPreferences: sl()),
     )
     ..registerLazySingleton(() => sharedPreferences);
+}
+
+Future<void> _initHttp() async {
+  sl.registerLazySingleton(() => http.Client());
 }
 
 Future<void> _initAuth() async {
@@ -52,4 +58,20 @@ Future<void> _initAuth() async {
     ..registerLazySingleton(() => FirebaseAuth.instance)
     ..registerLazySingleton(() => FirebaseFirestore.instance)
     ..registerLazySingleton(() => FirebaseStorage.instance);
+}
+
+Future<void> _initCarListing() async {
+  sl
+    ..registerFactory(
+      () => CarBloc(
+        getCarList: sl(),
+      ),
+    )
+    ..registerLazySingleton(() => GetCarList(sl()))
+    ..registerLazySingleton<CarRepository>(() => CarRepositoryImpl(sl()))
+    ..registerLazySingleton<CarRemoteDataSource>(
+      () => CarRemoteDataSourceImpl(
+        client: sl(),
+      ),
+    );
 }

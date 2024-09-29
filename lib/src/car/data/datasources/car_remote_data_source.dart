@@ -1,3 +1,4 @@
+import 'package:car_rental_app/core/utils/api_constants.dart';
 import 'package:car_rental_app/src/car/data/models/car_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,7 +17,7 @@ class CarRemoteDataSourceImpl implements CarRemoteDataSource {
   @override
   Future<List<CarModel>> getCarList() async {
     final response = await client.get(
-      Uri.parse('https://example.com/api/cars'), // 여기에 실제 API 엔드포인트를 입력하세요.
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.carList),
       headers: {
         'Content-Type': 'application/json',
       },
