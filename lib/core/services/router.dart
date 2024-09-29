@@ -5,6 +5,8 @@ import 'package:car_rental_app/src/auth/data/models/user_model.dart';
 import 'package:car_rental_app/src/auth/presentation/bloc/auth_bloc.dart';
 import 'package:car_rental_app/src/auth/presentation/views/sign_in_screen.dart';
 import 'package:car_rental_app/src/auth/presentation/views/sign_up_screen.dart';
+import 'package:car_rental_app/src/car/domain/entities/car.dart';
+import 'package:car_rental_app/src/car/presentation/view/car_detail_screen.dart';
 import 'package:car_rental_app/src/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:car_rental_app/src/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:car_rental_app/src/on_boarding/presentation/cubit/on_boarding_cubit.dart';

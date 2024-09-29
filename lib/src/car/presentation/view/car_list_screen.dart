@@ -1,4 +1,6 @@
+import 'package:car_rental_app/core/common/widgets/not_found_text.dart';
 import 'package:car_rental_app/src/car/presentation/bloc/car_bloc.dart';
+import 'package:car_rental_app/src/car/presentation/view/car_detail_screen.dart';
 import 'package:car_rental_app/src/car/presentation/widget/car_list_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,9 @@ class CarListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 화면이 빌드될 때 이벤트를 바로 디스패치
+    context.read<CarBloc>().add(const LoadCarsEvent());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Car List'),
@@ -23,26 +28,34 @@ class CarListScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is CarLoading) {
             return const Center(child: CircularProgressIndicator());
+          } else if ((state is CarLoaded && state.cars.isEmpty) ||
+              state is CarError) {
+            return const NotFoundText('No cars available.');
           } else if (state is CarLoaded) {
-            return ListView.builder(
-              itemCount: state.cars.length,
-              itemBuilder: (context, index) {
-                final car = state.cars[index];
-                return CarListTile(car: car);
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<CarBloc>().add(const LoadCarsEvent());
               },
+              child: ListView.builder(
+                itemCount: state.cars.length,
+                itemBuilder: (context, index) {
+                  final car = state.cars[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(CarDetailScreen.routeName, arguments: car);
+                    },
+                    child: CarListTile(car: car),
+                  );
+                },
+              ),
             );
           } else if (state is CarError) {
             return Center(child: Text('Error: ${state.message}'));
           } else {
-            return const Center(child: Text('Press the button to load cars'));
+            return const Center(child: Text('No cars available.'));
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<CarBloc>().add(const LoadCarsEvent());
-        },
-        child: const Icon(Icons.refresh),
       ),
     );
   }

@@ -18,7 +18,9 @@ class CarBloc extends Bloc<CarEvent, CarState> {
   final GetCarList _getCarList;
 
   Future<void> _loadCarsHandler(
-      LoadCarsEvent event, Emitter<CarState> emit) async {
+    LoadCarsEvent event,
+    Emitter<CarState> emit,
+  ) async {
     emit(const CarLoading());
 
     final result = await _getCarList();
