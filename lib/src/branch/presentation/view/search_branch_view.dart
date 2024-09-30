@@ -1,17 +1,15 @@
+import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/src/branch/presentation/bloc/branch_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SearchBranchScreen extends StatefulWidget {
-  const SearchBranchScreen({super.key});
-
-  static const String routeName = '/search-branch';
-
+class SearchBranchView extends StatefulWidget {
+  const SearchBranchView({super.key});
   @override
-  State<SearchBranchScreen> createState() => _SearchBranchScreenState();
+  State<SearchBranchView> createState() => _SearchBranchViewState();
 }
 
-class _SearchBranchScreenState extends State<SearchBranchScreen> {
+class _SearchBranchViewState extends State<SearchBranchView> {
   // Sample data for search
   final List<String> _allItems = [];
   List<String> _filteredItems = [];
@@ -48,6 +46,7 @@ class _SearchBranchScreenState extends State<SearchBranchScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: const NestedBackButton(),
         title: const Text('Select a pick-up location'),
       ),
       body: BlocConsumer<BranchBloc, BranchState>(
