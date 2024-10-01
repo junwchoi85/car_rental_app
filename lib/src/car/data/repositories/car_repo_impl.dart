@@ -3,7 +3,6 @@ import 'package:car_rental_app/core/errors/failures.dart';
 import 'package:car_rental_app/src/car/data/datasources/car_remote_data_source.dart';
 import 'package:car_rental_app/src/car/domain/entities/car.dart';
 import 'package:car_rental_app/src/car/domain/repositories/car_repository.dart';
-
 import 'package:dartz/dartz.dart';
 
 class CarRepositoryImpl implements CarRepository {

@@ -1,8 +1,9 @@
+import 'dart:convert';
+
+import 'package:car_rental_app/core/errors/exception.dart';
 import 'package:car_rental_app/core/utils/api_constants.dart';
 import 'package:car_rental_app/src/car/data/models/car_model.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:car_rental_app/core/errors/exception.dart';
 
 abstract class CarRemoteDataSource {
   /// Fetches the list of cars from the remote API.
