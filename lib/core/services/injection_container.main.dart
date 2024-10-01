@@ -9,6 +9,7 @@ Future<void> init() async {
   await _initAuth();
   await _initHttp();
   await _initCarListing();
+  await _initBranchListing();
 }
 
 Future<void> _onBoardingInit() async {
@@ -73,5 +74,19 @@ Future<void> _initCarListing() async {
       () => CarRemoteDataSourceImpl(
         client: sl(),
       ),
+    );
+}
+
+Future<void> _initBranchListing() async {
+  sl
+    ..registerFactory(
+      () => BranchBloc(
+        getBranchList: sl(),
+      ),
+    )
+    ..registerLazySingleton(() => GetBranchList(sl()))
+    ..registerLazySingleton<BranchRepository>(() => BranchRepositoryImpl(sl()))
+    ..registerLazySingleton<BranchRemoteDataSource>(
+      () => BranchRemoteDataSourceImpl(),
     );
 }

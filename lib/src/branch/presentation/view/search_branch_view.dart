@@ -94,6 +94,7 @@ class _SearchBranchViewState extends State<SearchBranchView> {
                                 setState(() {
                                   _filteredItems.clear();
                                 });
+                                Navigator.of(context).pop();
                               },
                             );
                           },

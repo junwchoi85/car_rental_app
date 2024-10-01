@@ -20,4 +20,6 @@ class MediaRes {
   static const onBordingContent3 = '$_baseImage/image3.png';
   static const emptyAvatar = '$_baseImage/empty_avatar.png';
   static const sampleCar = '$_baseImage/sample_car_image.png';
+
+  static const travel = '$_baseImage/New-Zealand-Travel-Guide-Header.jpg';
 }

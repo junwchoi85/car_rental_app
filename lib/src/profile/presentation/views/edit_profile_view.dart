@@ -17,7 +17,7 @@ class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
 
   @override
-  _EditProfileViewState createState() => _EditProfileViewState();
+  State<EditProfileView> createState() => _EditProfileViewState();
 }
 
 class _EditProfileViewState extends State<EditProfileView> {
