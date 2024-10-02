@@ -15,9 +15,6 @@ class CarHireBody extends StatefulWidget {
 }
 
 class _CarHireBodyState extends State<CarHireBody> {
-  final TextEditingController _pickUpLocationController =
-      TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final branchModelData = context.tabNavigator.popData;
@@ -46,20 +43,8 @@ class _CarHireBodyState extends State<CarHireBody> {
             child: Row(
               children: [
                 Expanded(
-                  // child: BlocBuilder<BranchBloc, BranchState>(
-                  //   builder: (context, state) {
-                  //     return TextField(
-                  //       controller: _pickUpLocationController,
-                  //       decoration: const InputDecoration(
-                  //         hintText: 'Pick-Up Location',
-                  //         border: OutlineInputBorder(),
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
                   child: TextField(
                     controller: TextEditingController(text: result?.name),
-                    // controller: _pickUpLocationController,
                     decoration: const InputDecoration(
                       hintText: 'Pick-Up Location',
                       border: OutlineInputBorder(),
