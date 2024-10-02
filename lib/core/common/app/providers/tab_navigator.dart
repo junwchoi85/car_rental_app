@@ -23,6 +23,13 @@ class TabNavigator extends ChangeNotifier {
 
   TabItem get currentPage => _navigationStack.last;
 
+  Object? _popData;
+  Object? get popData {
+    final data = _popData;
+    _popData = null;
+    return data;
+  }
+
   void push(TabItem page) {
     _navigationStack.add(page);
     notifyListeners();
@@ -58,6 +65,14 @@ class TabNavigator extends ChangeNotifier {
       ..clear()
       ..add(page);
     notifyListeners();
+  }
+
+  void popWithData(Object data) {
+    if (_navigationStack.length > 1) {
+      _popData = data;
+      _navigationStack.removeLast();
+      notifyListeners();
+    }
   }
 }
 

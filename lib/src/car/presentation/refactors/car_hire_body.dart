@@ -1,6 +1,7 @@
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/services/injection_container.dart';
+import 'package:car_rental_app/src/branch/data/models/branch_model.dart';
 import 'package:car_rental_app/src/branch/presentation/bloc/branch_bloc.dart';
 import 'package:car_rental_app/src/branch/presentation/view/search_branch_view.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ class _CarHireBodyState extends State<CarHireBody> {
 
   @override
   Widget build(BuildContext context) {
+    final branchModelData = context.tabNavigator.popData;
+    final result = branchModelData as BranchModel?;
+
     return Scaffold(
       body: Column(
         children: [
@@ -42,12 +46,25 @@ class _CarHireBodyState extends State<CarHireBody> {
             child: Row(
               children: [
                 Expanded(
+                  // child: BlocBuilder<BranchBloc, BranchState>(
+                  //   builder: (context, state) {
+                  //     return TextField(
+                  //       controller: _pickUpLocationController,
+                  //       decoration: const InputDecoration(
+                  //         hintText: 'Pick-Up Location',
+                  //         border: OutlineInputBorder(),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   child: TextField(
-                    controller: _pickUpLocationController,
+                    controller: TextEditingController(text: result?.name),
+                    // controller: _pickUpLocationController,
                     decoration: const InputDecoration(
                       hintText: 'Pick-Up Location',
                       border: OutlineInputBorder(),
                     ),
+                    enabled: false,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -56,8 +73,9 @@ class _CarHireBodyState extends State<CarHireBody> {
                   onPressed: () => context.push(
                     // const SearchBranchView()),
                     BlocProvider(
-                        create: (_) => sl<BranchBloc>(),
-                        child: const SearchBranchView()),
+                      create: (_) => sl<BranchBloc>(),
+                      child: const SearchBranchView(),
+                    ),
                   ),
                 ),
               ],

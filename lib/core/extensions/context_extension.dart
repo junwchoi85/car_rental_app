@@ -21,5 +21,7 @@ extension ContextExt on BuildContext {
 
   void pop() => tabNavigator.pop();
 
+  void popWithData(dynamic data) => tabNavigator.popWithData(data);
+
   void push(Widget page) => tabNavigator.push(TabItem(child: page));
 }

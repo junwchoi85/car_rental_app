@@ -124,7 +124,7 @@ class _SearchBranchViewState extends State<SearchBranchView> {
                               branch: selectedBranch,
                             ));
                             // Handle the branch selection
-                            context.pop();
+                            context.popWithData(selectedBranch);
                           }
                         : null,
                     child: const Text('Select Branch'),
