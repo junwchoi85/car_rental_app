@@ -115,8 +115,10 @@ class _SearchBranchViewState extends State<SearchBranchView> {
                         ? () {
                             final selectedBranch = (context
                                     .read<BranchBloc>()
-                                    .state as BranchSelected)
-                                .branch;
+                                    .state as BranchLoaded)
+                                .branches
+                                .firstWhere((branch) =>
+                                    branch.name == _controller.text);
                             final bloc = context.read<BranchBloc>();
                             bloc.add(SelectBranchEvent(
                               branch: selectedBranch,
