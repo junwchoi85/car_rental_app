@@ -12,6 +12,7 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
   })  : _getBranchList = getBranchList,
         super(const BranchInitial()) {
     on<LoadBranchesEvent>(_loadBranchesHandler);
+    on<SelectBranchEvent>(_branchSelectedHandler);
   }
   final GetBranchList _getBranchList;
 
@@ -27,5 +28,12 @@ class BranchBloc extends Bloc<BranchEvent, BranchState> {
       (failure) => emit(BranchError(failure.errorMessage)),
       (branches) => emit(BranchLoaded(branches)),
     );
+  }
+
+  Future<void> _branchSelectedHandler(
+    SelectBranchEvent event,
+    Emitter<BranchState> emit,
+  ) async {
+    emit(BranchSelected(event.branch));
   }
 }

@@ -39,18 +39,28 @@ class _CarHireBodyState extends State<CarHireBody> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onTap: () => context.push(
-                // const SearchBranchView()),
-                BlocProvider(
-                    create: (_) => sl<BranchBloc>(),
-                    child: const SearchBranchView()),
-              ),
-              controller: _pickUpLocationController,
-              decoration: const InputDecoration(
-                hintText: 'Pick-Up Location',
-                border: OutlineInputBorder(),
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _pickUpLocationController,
+                    decoration: const InputDecoration(
+                      hintText: 'Pick-Up Location',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () => context.push(
+                    // const SearchBranchView()),
+                    BlocProvider(
+                        create: (_) => sl<BranchBloc>(),
+                        child: const SearchBranchView()),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/src/branch/presentation/bloc/branch_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:car_rental_app/core/extensions/context_extension.dart';
 
 class SearchBranchView extends StatefulWidget {
   const SearchBranchView({super.key});
@@ -44,27 +45,34 @@ class _SearchBranchViewState extends State<SearchBranchView> {
   Widget build(BuildContext context) {
     context.read<BranchBloc>().add(const LoadBranchesEvent());
 
-    return Scaffold(
-      appBar: AppBar(
-        leading: const NestedBackButton(),
-        title: const Text('Select a pick-up location'),
-      ),
-      body: BlocConsumer<BranchBloc, BranchState>(
-        listener: (context, state) {
-          if (state is BranchLoaded) {
-            setState(() {
-              _allItems.clear();
-              _allItems.addAll(state.branches.map((branch) => branch.name));
-              _filteredItems = _allItems
-                  .where((item) => item
-                      .toLowerCase()
-                      .contains(_controller.text.toLowerCase()))
-                  .toList();
-            });
-          }
-        },
-        builder: (context, state) {
-          return Padding(
+    return BlocConsumer<BranchBloc, BranchState>(
+      listener: (context, state) {
+        if (state is BranchLoaded) {
+          setState(() {
+            _allItems.clear();
+            _allItems.addAll(state.branches.map((branch) => branch.name));
+            _filteredItems = _allItems
+                .where((item) =>
+                    item.toLowerCase().contains(_controller.text.toLowerCase()))
+                .toList();
+          });
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: const NestedBackButton(),
+            title: const Text('Select a pick-up location'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  context.pop();
+                },
+                child: const Text('cancel'),
+              ),
+            ],
+          ),
+          body: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
@@ -87,25 +95,44 @@ class _SearchBranchViewState extends State<SearchBranchView> {
                             return ListTile(
                               title: Text(_filteredItems[index]),
                               onTap: () {
-                                // Do something when an item is tapped
-                                print('Selected: ${_filteredItems[index]}');
                                 _controller.text = _filteredItems[index];
                                 // Optionally clear the search results
                                 setState(() {
                                   _filteredItems.clear();
                                 });
-                                Navigator.of(context).pop();
                               },
                             );
                           },
                         ),
                       )
                     : Container(), // Show nothing if no matching items
+                // add a button at the bottom to select the selected branch
+
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _controller.text.isNotEmpty
+                        ? () {
+                            final selectedBranch = (context
+                                    .read<BranchBloc>()
+                                    .state as BranchSelected)
+                                .branch;
+                            final bloc = context.read<BranchBloc>();
+                            bloc.add(SelectBranchEvent(
+                              branch: selectedBranch,
+                            ));
+                            // Handle the branch selection
+                            context.pop();
+                          }
+                        : null,
+                    child: const Text('Select Branch'),
+                  ),
+                ),
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

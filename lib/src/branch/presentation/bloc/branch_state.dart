@@ -32,3 +32,12 @@ class BranchError extends BranchState {
   @override
   List<Object> get props => [message];
 }
+
+class BranchSelected extends BranchState {
+  final Branch branch;
+
+  const BranchSelected(this.branch);
+
+  @override
+  List<Object> get props => [branch];
+}
