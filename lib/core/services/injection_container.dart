@@ -16,6 +16,7 @@ import 'package:car_rental_app/src/car/domain/repositories/car_repository.dart';
 import 'package:car_rental_app/src/branch/domain/usecases/get_branch_list.dart';
 import 'package:car_rental_app/src/car/domain/usecases/get_car_list.dart';
 import 'package:car_rental_app/src/car/presentation/bloc/car_bloc.dart';
+import 'package:car_rental_app/src/car/presentation/bloc/car_rental_bloc.dart';
 import 'package:car_rental_app/src/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:car_rental_app/src/on_boarding/data/repositories/on_boarding_repo_impl.dart';
 import 'package:car_rental_app/src/on_boarding/domain/repositories/on_boarding_repo.dart';
