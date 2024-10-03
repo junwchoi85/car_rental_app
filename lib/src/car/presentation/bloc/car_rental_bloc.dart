@@ -7,69 +7,28 @@ part 'car_rental_state.dart';
 
 class CarRentalBloc extends Bloc<CarRentalEvent, CarRentalState> {
   CarRentalBloc() : super(const CarRentalInitial()) {
-    on<UpdatePickUpBranchEvent>(_updatePickUpBranchHandler);
-    on<UpdateDropOffBranchEvent>(_updateDropOffBranchHandler);
-    on<UpdatePickUpDateEvent>(_updatePickUpDateHandler);
-    on<UpdateDropOffDateEvent>(_updateDropOffDateHandler);
-    on<UpdatePickUpTimeEvent>(_updatePickUpTimeHandler);
-    on<UpdateDropOffTimeEvent>(_updateDropOffTimeHandler);
+    on<UpdateRentalDetailEvent>(_updateRentalDetailHandler);
   }
 
-  Future<void> _updatePickUpBranchHandler(
-    UpdatePickUpBranchEvent event,
+  Future<void> _updateRentalDetailHandler(
+    UpdateRentalDetailEvent event,
     Emitter<CarRentalState> emit,
   ) async {
-    emit(
-      (state as CarRentalDetailsUpdated)
-          .copyWith(pickUpBranchCode: event.pickUpBranchCode),
-    );
-  }
-
-  Future<void> _updateDropOffBranchHandler(
-    UpdateDropOffBranchEvent event,
-    Emitter<CarRentalState> emit,
-  ) async {
-    emit(
-      (state as CarRentalDetailsUpdated)
-          .copyWith(dropOffBranchCode: event.dropOffBranchCode),
-    );
-  }
-
-  Future<void> _updatePickUpDateHandler(
-    UpdatePickUpDateEvent event,
-    Emitter<CarRentalState> emit,
-  ) async {
-    emit(
-      (state as CarRentalDetailsUpdated).copyWith(pickUpDate: event.pickUpDate),
-    );
-  }
-
-  Future<void> _updateDropOffDateHandler(
-    UpdateDropOffDateEvent event,
-    Emitter<CarRentalState> emit,
-  ) async {
-    emit(
-      (state as CarRentalDetailsUpdated)
-          .copyWith(dropOffDate: event.dropOffDate),
-    );
-  }
-
-  Future<void> _updatePickUpTimeHandler(
-    UpdatePickUpTimeEvent event,
-    Emitter<CarRentalState> emit,
-  ) async {
-    emit(
-      (state as CarRentalDetailsUpdated).copyWith(pickUpTime: event.pickUpTime),
-    );
-  }
-
-  Future<void> _updateDropOffTimeHandler(
-    UpdateDropOffTimeEvent event,
-    Emitter<CarRentalState> emit,
-  ) async {
-    emit(
-      (state as CarRentalDetailsUpdated)
-          .copyWith(dropOffTime: event.dropOffTime),
-    );
+    final currentState = state;
+    if (currentState is CarRentalDetailsUpdated) {
+      final carRental = currentState.carRental;
+      emit(
+        currentState.copyWith(
+          pickUpBranchCode:
+              event.pickUpBranchCode ?? carRental.pickUpBranchCode,
+          dropOffBranchCode:
+              event.dropOffBranchCode ?? carRental.dropOffBranchCode,
+          pickUpDate: event.pickUpDate ?? carRental.pickUpDate,
+          dropOffDate: event.dropOffDate ?? carRental.dropOffDate,
+          pickUpTime: event.pickUpTime ?? carRental.pickUpTime,
+          dropOffTime: event.dropOffTime ?? carRental.dropOffTime,
+        ),
+      );
+    }
   }
 }

@@ -9,10 +9,10 @@ class CarHireScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      appBar: CarHireAppBar(),
+      appBar: const CarHireAppBar(),
       body: GradientBackground(
         image: MediaRes.defaultGradientBackground,
         child: CarHireBody(),

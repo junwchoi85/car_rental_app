@@ -24,7 +24,7 @@ class CarRentalDetailsUpdated extends CarRentalState {
     String? pickUpTime,
     String? dropOffTime,
   }) {
-    return CarRentalDetailsUpdated(
+    final test = CarRentalDetailsUpdated(
       CarRental(
         pickUpBranchCode: pickUpBranchCode ?? carRental.pickUpBranchCode,
         dropOffBranchCode: dropOffBranchCode ?? carRental.dropOffBranchCode,
@@ -34,6 +34,7 @@ class CarRentalDetailsUpdated extends CarRentalState {
         dropOffTime: dropOffTime ?? carRental.dropOffTime,
       ),
     );
+    return test;
   }
 
   @override

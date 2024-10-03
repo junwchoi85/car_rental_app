@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:car_rental_app/core/common/enums/update_user.dart';
 import 'package:car_rental_app/src/auth/domain/entities/user.dart';
 import 'package:car_rental_app/src/auth/domain/usecases/forgot_password.dart';
@@ -8,6 +7,7 @@ import 'package:car_rental_app/src/auth/domain/usecases/sign_in.dart';
 import 'package:car_rental_app/src/auth/domain/usecases/sign_up.dart';
 import 'package:car_rental_app/src/auth/domain/usecases/update_user.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
