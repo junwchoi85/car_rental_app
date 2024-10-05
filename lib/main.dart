@@ -2,11 +2,14 @@ import 'package:car_rental_app/core/common/app/providers/user_provider.dart';
 import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/core/services/router.dart';
 import 'package:car_rental_app/firebase_options.dart';
+import 'package:car_rental_app/src/branch/presentation/bloc/branch_bloc.dart';
+import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
 import 'package:car_rental_app/src/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +42,8 @@ class _MainAppState extends State<MainApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => DashboardController()),
+        BlocProvider(create: (_) => sl<CarRentalBloc>()),
+        BlocProvider(create: (_) => sl<BranchBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

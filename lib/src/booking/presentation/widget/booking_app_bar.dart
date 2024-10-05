@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CarHireAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CarHireAppBar({super.key});
+class BookingAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const BookingAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,18 @@
+import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:equatable/equatable.dart';
 
-class CarRental extends Equatable {
-  const CarRental({
-    required this.pickUpBranchCode,
-    required this.dropOffBranchCode,
+class Booking extends Equatable {
+  const Booking({
+    required this.pickUpBranch,
+    required this.dropOffBranch,
     required this.pickUpDate,
     required this.dropOffDate,
     required this.pickUpTime,
     required this.dropOffTime,
   });
 
-  final String pickUpBranchCode;
-  final String dropOffBranchCode;
+  final Branch pickUpBranch;
+  final Branch dropOffBranch;
   final String pickUpDate;
   final String dropOffDate;
   final String pickUpTime;
@@ -19,8 +20,8 @@ class CarRental extends Equatable {
 
   @override
   List<Object?> get props => [
-        pickUpBranchCode,
-        dropOffBranchCode,
+        pickUpBranch,
+        dropOffBranch,
         pickUpDate,
         dropOffDate,
         pickUpTime,

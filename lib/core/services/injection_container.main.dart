@@ -70,8 +70,9 @@ Future<void> _initCarListing() async {
       ),
     )
     ..registerLazySingleton(() => GetCarList(sl()))
-    ..registerLazySingleton<CarRepository>(() => CarRepositoryImpl(sl()))
-    ..registerLazySingleton<CarRemoteDataSource>(
+    ..registerLazySingleton<BookingRepository>(
+        () => BookingRepositoryImpl(sl()))
+    ..registerLazySingleton<BookingRemoteDataSource>(
       () => CarRemoteDataSourceImpl(
         client: sl(),
       ),
@@ -93,8 +94,7 @@ Future<void> _initBranchListing() async {
 }
 
 Future<void> _initCarHiring() async {
-  sl
-    ..registerFactory(
-      () => CarRentalBloc(),
-    );
+  sl.registerFactory(
+    () => CarRentalBloc(),
+  );
 }

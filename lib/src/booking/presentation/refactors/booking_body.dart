@@ -1,19 +1,19 @@
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/utils/datetime_utils.dart';
-import 'package:car_rental_app/src/branch/presentation/view/search_branch_screen.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
+import 'package:car_rental_app/src/branch/presentation/view/search_branch_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CarHireBody extends StatefulWidget {
-  const CarHireBody({super.key});
+class BookingBody extends StatefulWidget {
+  const BookingBody({super.key});
 
   @override
-  State<CarHireBody> createState() => _CarHireBodyState();
+  State<BookingBody> createState() => _BookingBodyState();
 }
 
-class _CarHireBodyState extends State<CarHireBody> {
+class _BookingBodyState extends State<BookingBody> {
   final _pickUpLocationController = TextEditingController();
   final _dropOffLocationController = TextEditingController();
 

@@ -1,21 +1,21 @@
 import 'package:car_rental_app/core/common/widgets/gradient_background.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
-import 'package:car_rental_app/src/car/presentation/refactors/car_hire_body.dart';
-import 'package:car_rental_app/src/car/presentation/widget/car_hire_app_bar.dart';
+import 'package:car_rental_app/src/booking/presentation/refactors/booking_body.dart';
+import 'package:car_rental_app/src/booking/presentation/widget/booking_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class CarHireScreen extends StatelessWidget {
-  const CarHireScreen({super.key});
+class BookingScreen extends StatelessWidget {
+  const BookingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      appBar: const CarHireAppBar(),
+      appBar: BookingAppBar(),
       body: GradientBackground(
         image: MediaRes.defaultGradientBackground,
-        child: CarHireBody(),
+        child: BookingBody(),
       ),
     );
   }

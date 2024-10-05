@@ -1,5 +1,5 @@
 import 'package:car_rental_app/core/resources/media_res.dart';
-import 'package:car_rental_app/src/car/domain/entities/car.dart';
+import 'package:car_rental_app/src/booking/domain/entities/car.dart';
 import 'package:flutter/material.dart';
 
 class CarListTile extends StatelessWidget {

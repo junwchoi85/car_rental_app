@@ -60,6 +60,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         (_) => CarDetailScreen(settings.arguments as Car),
         settings: settings,
       );
+    // case SearchBranchScreen.routeName:
+    //   return _pageBuilder(
+    //     (_) => const SearchBranchScreen(),
+    //     settings: settings,
+    //   );
     default:
       return _pageBuilder(
         (_) => const PageUnderConstruction(),

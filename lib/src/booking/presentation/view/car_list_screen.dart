@@ -1,7 +1,7 @@
 import 'package:car_rental_app/core/common/widgets/not_found_text.dart';
-import 'package:car_rental_app/src/car/presentation/bloc/car_bloc.dart';
-import 'package:car_rental_app/src/car/presentation/view/car_detail_screen.dart';
-import 'package:car_rental_app/src/car/presentation/widget/car_list_tiles.dart';
+import 'package:car_rental_app/src/booking/presentation/bloc/car_bloc.dart';
+import 'package:car_rental_app/src/booking/presentation/view/car_detail_screen.dart';
+import 'package:car_rental_app/src/booking/presentation/widget/car_list_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

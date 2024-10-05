@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PersistentView extends StatefulWidget {
-  const PersistentView({
-    super.key,
-    this.body,
-  });
+  const PersistentView({super.key, this.body});
   final Widget? body;
 
   @override

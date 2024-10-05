@@ -1,5 +1,5 @@
-import 'package:car_rental_app/src/car/domain/entities/car.dart';
-import 'package:car_rental_app/src/car/domain/usecases/get_car_list.dart';
+import 'package:car_rental_app/src/booking/domain/entities/car.dart';
+import 'package:car_rental_app/src/booking/domain/usecases/get_car_list.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

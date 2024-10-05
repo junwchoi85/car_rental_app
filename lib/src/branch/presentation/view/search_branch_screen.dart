@@ -1,50 +1,44 @@
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
+import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/src/branch/presentation/bloc/branch_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:car_rental_app/core/extensions/context_extension.dart';
 
-class SearchBranchView extends StatefulWidget {
-  const SearchBranchView({super.key});
+class SearchBranchScreen extends StatefulWidget {
+  const SearchBranchScreen({
+    super.key,
+    required this.serviceType,
+    this.initialBranch,
+  });
+  final String serviceType;
+  final String? initialBranch;
+  static const routeName = '/search-branch';
+
   @override
-  State<SearchBranchView> createState() => _SearchBranchViewState();
+  State<SearchBranchScreen> createState() => _SearchBranchScreenState();
 }
 
-class _SearchBranchViewState extends State<SearchBranchView> {
+class _SearchBranchScreenState extends State<SearchBranchScreen> {
   // Sample data for search
   final List<String> _allItems = [];
   List<String> _filteredItems = [];
-
-  // Controller to capture user input
-  final TextEditingController _controller = TextEditingController();
+  late TextEditingController _branchController;
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_onSearchChanged);
+    _branchController = TextEditingController();
+    context.read<BranchBloc>().add(const LoadBranchesEvent());
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onSearchChanged);
-    _controller.dispose();
+    _branchController.dispose();
     super.dispose();
-  }
-
-  // Function to handle the input change
-  void _onSearchChanged() {
-    setState(() {
-      _filteredItems = _allItems
-          .where((item) =>
-              item.toLowerCase().contains(_controller.text.toLowerCase()))
-          .toList();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<BranchBloc>().add(const LoadBranchesEvent());
-
     return BlocConsumer<BranchBloc, BranchState>(
       listener: (context, state) {
         if (state is BranchLoaded) {
@@ -52,8 +46,9 @@ class _SearchBranchViewState extends State<SearchBranchView> {
             _allItems.clear();
             _allItems.addAll(state.branches.map((branch) => branch.name));
             _filteredItems = _allItems
-                .where((item) =>
-                    item.toLowerCase().contains(_controller.text.toLowerCase()))
+                .where((item) => item
+                    .toLowerCase()
+                    .contains(_branchController.text.toLowerCase()))
                 .toList();
           });
         }
@@ -62,7 +57,7 @@ class _SearchBranchViewState extends State<SearchBranchView> {
         return Scaffold(
           appBar: AppBar(
             leading: const NestedBackButton(),
-            title: const Text('Select a pick-up location'),
+            title: const Text('Branch Location'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -78,10 +73,10 @@ class _SearchBranchViewState extends State<SearchBranchView> {
               children: [
                 // Search TextField
                 TextField(
-                  controller: _controller,
-                  decoration: const InputDecoration(
-                    labelText: 'Search',
-                    border: OutlineInputBorder(),
+                  controller: _branchController,
+                  decoration: InputDecoration(
+                    labelText: 'Select a ${widget.serviceType} location',
+                    border: const OutlineInputBorder(),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -95,7 +90,7 @@ class _SearchBranchViewState extends State<SearchBranchView> {
                             return ListTile(
                               title: Text(_filteredItems[index]),
                               onTap: () {
-                                _controller.text = _filteredItems[index];
+                                _branchController.text = _filteredItems[index];
                                 // Optionally clear the search results
                                 setState(() {
                                   _filteredItems.clear();
@@ -106,19 +101,19 @@ class _SearchBranchViewState extends State<SearchBranchView> {
                         ),
                       )
                     : Container(), // Show nothing if no matching items
+                const Spacer(),
                 // add a button at the bottom to select the selected branch
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: _controller.text.isNotEmpty
+                    onPressed: _branchController.text.isNotEmpty
                         ? () {
                             final selectedBranch = (context
                                     .read<BranchBloc>()
                                     .state as BranchLoaded)
                                 .branches
                                 .firstWhere((branch) =>
-                                    branch.name == _controller.text);
+                                    branch.name == _branchController.text);
                             final bloc = context.read<BranchBloc>();
                             bloc.add(SelectBranchEvent(
                               branch: selectedBranch,
