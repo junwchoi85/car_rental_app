@@ -47,7 +47,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       pickUpTime: event.pickUpTime,
       dropOffTime: event.dropOffTime,
     );
-    emit(BookingDetailsUpdated(_currentBooking!));
+    emit(BookingDetailsUpdated(_currentBooking));
   }
 
   Future<void> _serviceLocationSelectedHandler(

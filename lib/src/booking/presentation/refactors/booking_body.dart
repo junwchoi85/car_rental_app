@@ -1,8 +1,11 @@
 import 'package:car_rental_app/core/common/enums/service_type.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
+import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/core/utils/datetime_utils.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
+import 'package:car_rental_app/src/booking/presentation/bloc/car_bloc.dart';
+import 'package:car_rental_app/src/booking/presentation/view/car_list_screen.dart';
 import 'package:car_rental_app/src/booking/presentation/view/service_location_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
