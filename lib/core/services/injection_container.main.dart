@@ -9,6 +9,7 @@ Future<void> init() async {
   await _initAuth();
   await _initHttp();
   await _initBooking();
+  await _initCarListing();
 }
 
 Future<void> _onBoardingInit() async {
@@ -67,14 +68,14 @@ Future<void> _initCarListing() async {
         getCarList: sl(),
       ),
     )
-    ..registerLazySingleton(() => GetCarList(sl()))
-    ..registerLazySingleton<BookingRepository>(
-        () => BookingRepositoryImpl(sl()))
-    ..registerLazySingleton<BookingRemoteDataSource>(
-      () => BookingRemoteDataSourceImpl(
-        client: sl(),
-      ),
-    );
+    ..registerLazySingleton(() => GetCarList(sl()));
+  // ..registerLazySingleton<BookingRepository>(
+  //     () => BookingRepositoryImpl(sl()))
+  // ..registerLazySingleton<BookingRemoteDataSource>(
+  //   () => BookingRemoteDataSourceImpl(
+  //     client: sl(),
+  //   ),
+  // );
 }
 
 Future<void> _initBooking() async {

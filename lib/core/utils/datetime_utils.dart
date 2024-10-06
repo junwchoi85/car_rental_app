@@ -37,4 +37,10 @@ class DatetimeUtils {
     if (date == null) return 'Select date';
     return date.toIso8601String().split('T').first;
   }
+
+  static String parseDate(String dateString) {
+    if (dateString.isEmpty) return '';
+    final date = DateTime.parse(dateString);
+    return "${date.month}/${date.day}";
+  }
 }

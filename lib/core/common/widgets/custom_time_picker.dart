@@ -1,3 +1,4 @@
+import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,11 +43,12 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                       });
                     },
                     children: _hours.map((hour) {
+                      final formattedHour = hour < 12
+                          ? 'AM  ${hour.toString().padLeft(2, '0')}'
+                          : 'PM  ${(hour == 12 ? 12 : hour - 12).toString().padLeft(2, '0')}';
                       return Center(
                         child: Text(
-                          hour < 12
-                              ? 'AM $hour'
-                              : 'PM ${hour == 12 ? 12 : hour - 12}',
+                          formattedHour,
                           style: const TextStyle(fontSize: 20),
                         ),
                       );
@@ -79,6 +81,10 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
           ),
           // OK 버튼
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: context.theme.secondaryHeaderColor,
+              foregroundColor: context.theme.colorScheme.onSecondary,
+            ),
             onPressed: () {
               setState(() {
                 _selectedTime =
@@ -87,7 +93,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
               widget.onTimeSelected(_selectedTime!);
               Navigator.pop(context);
             },
-            child: const Text("OK"),
+            child: const Text("Select Time"),
           ),
         ],
       ),
