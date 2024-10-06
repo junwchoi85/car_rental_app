@@ -2,6 +2,9 @@ part of 'booking_bloc.dart';
 
 abstract class BookingEvent extends Equatable {
   const BookingEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class UpdateBookingDetailEvent extends BookingEvent {
@@ -32,9 +35,19 @@ class UpdateBookingDetailEvent extends BookingEvent {
       ];
 }
 
-class LoadBranchesEvent extends BookingEvent {
-  const LoadBranchesEvent();
+class LoadServiceLocationsEvent extends BookingEvent {
+  const LoadServiceLocationsEvent();
+}
+
+class SelectServiceLocationEvent extends BookingEvent {
+  const SelectServiceLocationEvent({
+    required this.serviceLocation,
+    required this.serviceType,
+  });
+
+  final String serviceLocation;
+  final ServiceType serviceType;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [serviceLocation];
 }

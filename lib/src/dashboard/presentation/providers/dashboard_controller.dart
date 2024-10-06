@@ -17,12 +17,7 @@ class DashboardController extends ChangeNotifier {
   final List<Widget> _screens = [
     ChangeNotifierProvider(
       create: (_) => TabNavigator(
-        TabItem(child: const BookingScreen()
-            // child: BlocProvider(
-            //   create: (_) => sl<BranchBloc>(),
-            //   child: const CarHireScreen(),
-            // ),
-            ),
+        TabItem(child: const BookingScreen()),
       ),
       child: const PersistentView(),
     ),

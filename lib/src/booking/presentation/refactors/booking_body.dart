@@ -1,8 +1,9 @@
+import 'package:car_rental_app/core/common/enums/service_type.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/utils/datetime_utils.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
-import 'package:car_rental_app/src/branch/presentation/view/search_branch_screen.dart';
+import 'package:car_rental_app/src/booking/presentation/view/service_location_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,7 +39,7 @@ class _BookingBodyState extends State<BookingBody> {
   Widget build(BuildContext context) {
     /// Update rental details
     void updateRentalDetails() {
-      context.read<CarRentalBloc>().add(UpdateBookingDetailEvent(
+      context.read<BookingBloc>().add(UpdateBookingDetailEvent(
             pickUpDate: _pickUpDateController.text,
             pickUpTime: _pickUpTimeController.text,
             dropOffDate: _dropOffDateController.text,
@@ -46,10 +47,12 @@ class _BookingBodyState extends State<BookingBody> {
           ));
     }
 
-    return BlocConsumer<CarRentalBloc, BookingState>(
+    return BlocConsumer<BookingBloc, BookingState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is BookingDetailsUpdated) {
+          _pickUpLocationController.text = state.carRental.pickUpBranch.name;
+          _dropOffLocationController.text = state.carRental.dropOffBranch.name;
           _pickUpDateController.text = state.carRental.pickUpDate;
           _pickUpTimeController.text = state.carRental.pickUpTime;
           _dropOffDateController.text = state.carRental.dropOffDate;
@@ -91,8 +94,16 @@ class _BookingBodyState extends State<BookingBody> {
                     icon: const Icon(Icons.search),
                     onPressed: () {
                       updateRentalDetails();
-                      context.push(const SearchBranchScreen(
-                        serviceType: 'Pickup',
+
+                      // context.push(
+                      //   BlocProvider.value(
+                      //     value: sl<BookingBloc>(),
+                      //     child: const ServiceLocationView(
+                      //         serviceType: ServiceType.pickup),
+                      //   ),
+                      // );
+                      context.push(const ServiceLocationView(
+                        serviceType: ServiceType.pickup,
                       ));
                     },
                   ),
@@ -119,8 +130,8 @@ class _BookingBodyState extends State<BookingBody> {
                     onPressed: () {
                       updateRentalDetails();
 
-                      context.push(
-                          const SearchBranchScreen(serviceType: 'Drop-Off'));
+                      context.push(const ServiceLocationView(
+                          serviceType: ServiceType.dropoff));
                     },
                   ),
                 ],

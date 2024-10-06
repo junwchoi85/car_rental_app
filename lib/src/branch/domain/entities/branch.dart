@@ -1,6 +1,13 @@
 import 'package:equatable/equatable.dart';
 
 class Branch extends Equatable {
+  const Branch.empty()
+      : branchCode = '',
+        name = '',
+        address = '',
+        phone = '',
+        email = '';
+
   const Branch({
     required this.branchCode,
     required this.name,

@@ -2,6 +2,14 @@ import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:equatable/equatable.dart';
 
 class Booking extends Equatable {
+  const Booking.empty()
+      : pickUpBranch = const Branch.empty(),
+        dropOffBranch = const Branch.empty(),
+        pickUpDate = '',
+        dropOffDate = '',
+        pickUpTime = '',
+        dropOffTime = '';
+
   const Booking({
     required this.pickUpBranch,
     required this.dropOffBranch,
@@ -27,4 +35,22 @@ class Booking extends Equatable {
         pickUpTime,
         dropOffTime,
       ];
+
+  Booking copyWith({
+    Branch? pickUpBranch,
+    Branch? dropOffBranch,
+    String? pickUpDate,
+    String? dropOffDate,
+    String? pickUpTime,
+    String? dropOffTime,
+  }) {
+    return Booking(
+      pickUpBranch: pickUpBranch ?? this.pickUpBranch,
+      dropOffBranch: dropOffBranch ?? this.dropOffBranch,
+      pickUpDate: pickUpDate ?? this.pickUpDate,
+      dropOffDate: dropOffDate ?? this.dropOffDate,
+      pickUpTime: pickUpTime ?? this.pickUpTime,
+      dropOffTime: dropOffTime ?? this.dropOffTime,
+    );
+  }
 }

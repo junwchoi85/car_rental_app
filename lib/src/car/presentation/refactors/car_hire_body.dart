@@ -38,7 +38,7 @@ class _CarHireBodyState extends State<CarHireBody> {
   Widget build(BuildContext context) {
     /// Update rental details
     void updateRentalDetails() {
-      context.read<CarRentalBloc>().add(UpdateBookingDetailEvent(
+      context.read<BookingBloc>().add(UpdateBookingDetailEvent(
             pickUpDate: _pickUpDateController.text,
             pickUpTime: _pickUpTimeController.text,
             dropOffDate: _dropOffDateController.text,
@@ -46,7 +46,7 @@ class _CarHireBodyState extends State<CarHireBody> {
           ));
     }
 
-    return BlocConsumer<CarRentalBloc, BookingState>(
+    return BlocConsumer<BookingBloc, BookingState>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is BookingDetailsUpdated) {

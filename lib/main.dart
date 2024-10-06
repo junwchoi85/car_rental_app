@@ -2,7 +2,6 @@ import 'package:car_rental_app/core/common/app/providers/user_provider.dart';
 import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/core/services/router.dart';
 import 'package:car_rental_app/firebase_options.dart';
-import 'package:car_rental_app/src/branch/presentation/bloc/branch_bloc.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
 import 'package:car_rental_app/src/dashboard/presentation/providers/dashboard_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,8 +41,7 @@ class _MainAppState extends State<MainApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => DashboardController()),
-        BlocProvider(create: (_) => sl<CarRentalBloc>()),
-        BlocProvider(create: (_) => sl<BranchBloc>()),
+        BlocProvider(create: (_) => sl<BookingBloc>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

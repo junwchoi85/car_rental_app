@@ -8,9 +8,7 @@ Future<void> init() async {
   await _onBoardingInit();
   await _initAuth();
   await _initHttp();
-  await _initCarHiring();
-  await _initCarListing();
-  await _initBranchListing();
+  await _initBooking();
 }
 
 Future<void> _onBoardingInit() async {
@@ -73,28 +71,28 @@ Future<void> _initCarListing() async {
     ..registerLazySingleton<BookingRepository>(
         () => BookingRepositoryImpl(sl()))
     ..registerLazySingleton<BookingRemoteDataSource>(
-      () => CarRemoteDataSourceImpl(
+      () => BookingRemoteDataSourceImpl(
         client: sl(),
       ),
     );
 }
 
-Future<void> _initBranchListing() async {
+Future<void> _initBooking() async {
   sl
     ..registerFactory(
-      () => BranchBloc(
-        getBranchList: sl(),
+      () => BookingBloc(
+        getServiceLocationList: sl(),
       ),
     )
-    ..registerLazySingleton(() => GetBranchList(sl()))
-    ..registerLazySingleton<BranchRepository>(() => BranchRepositoryImpl(sl()))
-    ..registerLazySingleton<BranchRemoteDataSource>(
-      () => BranchRemoteDataSourceImpl(),
+    // usecases
+    ..registerLazySingleton(() => GetServiceLocationList(sl()))
+    // repositories
+    ..registerLazySingleton<BookingRepository>(
+        () => BookingRepositoryImpl(sl()))
+    // data sources
+    ..registerLazySingleton<BookingRemoteDataSource>(
+      () => BookingRemoteDataSourceImpl(
+        client: sl(),
+      ),
     );
-}
-
-Future<void> _initCarHiring() async {
-  sl.registerFactory(
-    () => CarRentalBloc(),
-  );
 }

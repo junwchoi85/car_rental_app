@@ -24,7 +24,7 @@ class BookingDetailsUpdated extends BookingState {
     String? pickUpTime,
     String? dropOffTime,
   }) {
-    final test = BookingDetailsUpdated(
+    return BookingDetailsUpdated(
       Booking(
         pickUpBranch: pickUpBranch ?? carRental.pickUpBranch,
         dropOffBranch: dropOffBranch ?? carRental.dropOffBranch,
@@ -34,31 +34,39 @@ class BookingDetailsUpdated extends BookingState {
         dropOffTime: dropOffTime ?? carRental.dropOffTime,
       ),
     );
-    return test;
   }
 
   @override
   List<Object> get props => [carRental];
 }
 
-class BranchLoading extends BookingState {
-  const BranchLoading();
+class ServiceLocationsLoading extends BookingState {
+  const ServiceLocationsLoading();
 }
 
-class BranchLoaded extends BookingState {
+class ServiceLocationsError extends BookingState {
+  final String message;
+
+  const ServiceLocationsError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class ServiceLocationsLoaded extends BookingState {
   final List<Branch> branches;
 
-  const BranchLoaded(this.branches);
+  const ServiceLocationsLoaded(this.branches);
 
   @override
   List<Object> get props => [branches];
 }
 
-class BranchError extends BookingState {
-  final String message;
+class ServiceLocationSelected extends BookingState {
+  final Branch selectedBranch;
 
-  const BranchError(this.message);
+  const ServiceLocationSelected(this.selectedBranch);
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [selectedBranch];
 }

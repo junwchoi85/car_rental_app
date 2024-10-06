@@ -13,10 +13,10 @@ abstract class BookingRemoteDataSource {
   Future<List<BranchModel>> getBranchList();
 }
 
-class CarRemoteDataSourceImpl implements BookingRemoteDataSource {
+class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   final http.Client client;
 
-  CarRemoteDataSourceImpl({required this.client});
+  BookingRemoteDataSourceImpl({required this.client});
 
   @override
   Future<List<CarModel>> getCarList() async {
