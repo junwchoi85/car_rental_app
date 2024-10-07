@@ -24,8 +24,8 @@ class _BookingBodyState extends State<BookingBody> {
   final _pickUpDateController = TextEditingController();
   final _pickUpTimeController = TextEditingController();
 
-  final _dropOffTimeController = TextEditingController();
   final _dropOffDateController = TextEditingController();
+  final _dropOffTimeController = TextEditingController();
 
   late bool _isDropOffLocationVisible;
 
@@ -33,6 +33,11 @@ class _BookingBodyState extends State<BookingBody> {
   void initState() {
     super.initState();
     _isDropOffLocationVisible = false;
+
+    _pickUpDateController.text = DatetimeUtils.dateNow();
+    _dropOffDateController.text = DatetimeUtils.twoDaysFromNow();
+    _pickUpTimeController.text = '12:00 PM';
+    _dropOffTimeController.text = '12:00 PM';
   }
 
   @override
@@ -184,8 +189,6 @@ class _BookingBodyState extends State<BookingBody> {
               visible: !_isDropOffLocationVisible,
               child: GestureDetector(
                 onTap: () {
-                  setState(() {});
-
                   context.push(
                     const ServiceLocationView(
                       serviceType: ServiceType.dropoff,

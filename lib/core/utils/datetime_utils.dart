@@ -43,4 +43,15 @@ class DatetimeUtils {
     final date = DateTime.parse(dateString);
     return "${date.month}/${date.day}";
   }
+
+  static String dateNow() {
+    final now = DateTime.now();
+    return "${now.month}/${now.day}";
+  }
+
+  static String twoDaysFromNow() {
+    final now = DateTime.now();
+    final twoDays = now.add(const Duration(days: 2));
+    return "${twoDays.month}/${twoDays.day}";
+  }
 }
