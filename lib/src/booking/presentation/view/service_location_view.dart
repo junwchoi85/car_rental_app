@@ -99,6 +99,7 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
                       if (value!.isEmpty) {
                         return 'Please select a ${widget.serviceType.value} location';
                       }
+                      return null;
                     },
                   ),
                 ),

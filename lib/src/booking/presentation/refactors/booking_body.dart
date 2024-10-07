@@ -125,6 +125,7 @@ class _BookingBodyState extends State<BookingBody> {
                           if (value!.isEmpty) {
                             return 'Please select a pickup location';
                           }
+                          return null;
                         },
                         onTap: () {
                           updateRentalDetails();
@@ -247,6 +248,7 @@ class _BookingBodyState extends State<BookingBody> {
                                   if (value!.isEmpty) {
                                     return 'This field is required';
                                   }
+                                  return null;
                                 },
                                 onTap: () async {
                                   final DateTime? date =
@@ -268,6 +270,7 @@ class _BookingBodyState extends State<BookingBody> {
                                   if (value!.isEmpty) {
                                     return 'This field is required';
                                   }
+                                  return null;
                                 },
                                 onTap: () async {
                                   await showModalBottomSheet(
@@ -317,6 +320,7 @@ class _BookingBodyState extends State<BookingBody> {
                                   if (value!.isEmpty) {
                                     return 'This field is required';
                                   }
+                                  return null;
                                 },
                                 onTap: () async {
                                   final DateTime? date =
@@ -338,6 +342,7 @@ class _BookingBodyState extends State<BookingBody> {
                                   if (value!.isEmpty) {
                                     return 'This field is required';
                                   }
+                                  return null;
                                 },
                                 onTap: () async {
                                   await showModalBottomSheet(
