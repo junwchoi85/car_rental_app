@@ -22,16 +22,35 @@ class BookingScreen extends StatelessWidget {
         image: MediaRes.defaultGradientBackground,
         child: Column(
           children: [
+            Image.asset(MediaRes.travel),
+            const SizedBox(height: 8),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'HIRE A CAR',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
             const BookingBody(),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: context.theme.primaryColor,
                     foregroundColor: context.theme.colorScheme.onPrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(4), // 각진 모양을 위해 작은 값 설정
+                    ),
                   ),
                   onPressed: () {
                     // Handle button press

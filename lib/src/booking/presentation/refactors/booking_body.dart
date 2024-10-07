@@ -104,26 +104,11 @@ class _BookingBodyState extends State<BookingBody> {
               DatetimeUtils.parseDate(state.carRental.dropOffDate);
           _dropOffTimeController.text = state.carRental.dropOffTime;
         }
-        return Column(
-          children: [
-            Image.asset(MediaRes.travel),
-            const SizedBox(height: 8),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'HIRE A CAR',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
                 children: [
                   Expanded(
                     child: TextField(
@@ -144,23 +129,10 @@ class _BookingBodyState extends State<BookingBody> {
                       },
                     ),
                   ),
-                  // const SizedBox(width: 8),
-                  // IconButton(
-                  //   icon: const Icon(Icons.search),
-                  //   onPressed: () {
-                  //     updateRentalDetails();
-                  //     context.push(const ServiceLocationView(
-                  //       serviceType: ServiceType.pickup,
-                  //     ));
-                  //   },
-                  // ),
                 ],
               ),
-            ),
-            Visibility(
-              visible: _isDropOffLocationVisible,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              Visibility(
+                visible: _isDropOffLocationVisible,
                 child: Row(
                   children: [
                     Expanded(
@@ -184,65 +156,62 @@ class _BookingBodyState extends State<BookingBody> {
                   ],
                 ),
               ),
-            ),
-            Visibility(
-              visible: !_isDropOffLocationVisible,
-              child: GestureDetector(
-                onTap: () {
-                  context.push(
-                    const ServiceLocationView(
-                      serviceType: ServiceType.dropoff,
-                    ),
-                  );
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Icon(Icons.add, color: context.theme.primaryColor),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Add different drop-off location',
-                          style: TextStyle(color: context.theme.primaryColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Visibility(
-              visible: _isDropOffLocationVisible,
-              child: GestureDetector(
-                onTap: () {
-                  resetDropOffLocation();
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-                        Icon(Icons.undo_rounded,
-                            color: context.theme.primaryColor),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Return at pickup location',
-                          style: TextStyle(color: context.theme.primaryColor),
-                        ),
-                      ],
+              Visibility(
+                visible: !_isDropOffLocationVisible,
+                child: GestureDetector(
+                  onTap: () {
+                    context.push(
+                      const ServiceLocationView(
+                        serviceType: ServiceType.dropoff,
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Icon(Icons.add, color: context.theme.primaryColor),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Add different drop-off location',
+                            style: TextStyle(color: context.theme.primaryColor),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: SizedBox(
+              Visibility(
+                visible: _isDropOffLocationVisible,
+                child: GestureDetector(
+                  onTap: () {
+                    resetDropOffLocation();
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        children: [
+                          Icon(Icons.undo_rounded,
+                              color: context.theme.primaryColor),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Return at pickup location',
+                            style: TextStyle(color: context.theme.primaryColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
                 width: double.infinity,
                 child: Row(
                   children: [
@@ -362,8 +331,8 @@ class _BookingBodyState extends State<BookingBody> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
