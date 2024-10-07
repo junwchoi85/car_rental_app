@@ -38,7 +38,7 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
 
   @override
   Widget build(BuildContext context) {
-    void updateRentalDetails() {
+    void updateServiceLocation() {
       final state =
           context.read<BookingBloc>().state as ServiceLocationSelected;
       final branch = state.selectedBranch;
@@ -137,7 +137,7 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
                     ),
                     onPressed: _serviceLocationController.text.isNotEmpty
                         ? () {
-                            updateRentalDetails();
+                            updateServiceLocation();
                             context.pop();
                           }
                         : null,

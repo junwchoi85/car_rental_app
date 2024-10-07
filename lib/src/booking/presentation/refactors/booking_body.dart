@@ -6,6 +6,7 @@ import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/utils/datetime_utils.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
 import 'package:car_rental_app/src/booking/presentation/view/service_location_view.dart';
+import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,14 @@ class _BookingBodyState extends State<BookingBody> {
 
   final _dropOffTimeController = TextEditingController();
   final _dropOffDateController = TextEditingController();
+
+  late bool _isDropOffLocationVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _isDropOffLocationVisible = false;
+  }
 
   @override
   void dispose() {
@@ -51,6 +60,10 @@ class _BookingBodyState extends State<BookingBody> {
           ));
     }
 
+    void resetDropOffLocation() {
+      bloc.add(const UpdateBookingDetailEvent(dropOffBranch: Branch.empty()));
+    }
+
     void updatePickupDate(DateTime date) {
       final formatedDate = date.toIso8601String().split('T').first;
       bloc.add(UpdateBookingDetailEvent(pickUpDate: formatedDate));
@@ -68,7 +81,7 @@ class _BookingBodyState extends State<BookingBody> {
 
     void updateDropOffTime(TimeOfDay time) {
       final formatedTime = time.format(context);
-      bloc.add(UpdateBookingDetailEvent(pickUpTime: formatedTime));
+      bloc.add(UpdateBookingDetailEvent(dropOffTime: formatedTime));
     }
 
     return BlocConsumer<BookingBloc, BookingState>(
@@ -76,6 +89,8 @@ class _BookingBodyState extends State<BookingBody> {
       builder: (context, state) {
         if (state is BookingDetailsUpdated) {
           _pickUpLocationController.text = state.carRental.pickUpBranch.name;
+          _isDropOffLocationVisible =
+              state.carRental.dropOffBranch.branchCode.isNotEmpty;
           _dropOffLocationController.text = state.carRental.dropOffBranch.name;
           _pickUpDateController.text =
               DatetimeUtils.parseDate(state.carRental.pickUpDate);
@@ -137,38 +152,95 @@ class _BookingBodyState extends State<BookingBody> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _dropOffLocationController,
-                      decoration: const InputDecoration(
-                        hintText: 'Drop-off Location',
-                        border: OutlineInputBorder(),
+            Visibility(
+              visible: _isDropOffLocationVisible,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _dropOffLocationController,
+                        decoration: const InputDecoration(
+                          hintText: 'Drop-off Location',
+                          border: OutlineInputBorder(),
+                        ),
+                        readOnly: true,
+                        onTap: () {
+                          updateRentalDetails();
+                          context.push(
+                            const ServiceLocationView(
+                              serviceType: ServiceType.dropoff,
+                            ),
+                          );
+                        },
                       ),
-                      readOnly: true,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Visibility(
+              visible: !_isDropOffLocationVisible,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {});
+
+                  context.push(
+                    const ServiceLocationView(
+                      serviceType: ServiceType.dropoff,
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Icon(Icons.add, color: context.theme.primaryColor),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Add different drop-off location',
+                          style: TextStyle(color: context.theme.primaryColor),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: () {
-                      updateRentalDetails();
-
-                      context.push(const ServiceLocationView(
-                          serviceType: ServiceType.dropoff));
-                    },
+                ),
+              ),
+            ),
+            Visibility(
+              visible: _isDropOffLocationVisible,
+              child: GestureDetector(
+                onTap: () {
+                  resetDropOffLocation();
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        Icon(Icons.undo_rounded,
+                            color: context.theme.primaryColor),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Return at pickup location',
+                          style: TextStyle(color: context.theme.primaryColor),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
-                // height: 100, // 각 Row의 높이를 고려하여 전체 높이를 설정
                 child: Row(
                   children: [
                     Expanded(
@@ -183,7 +255,7 @@ class _BookingBodyState extends State<BookingBody> {
                           children: [
                             TextField(
                               decoration: const InputDecoration(
-                                labelText: 'Pickup Date',
+                                labelText: 'Pickup',
                                 hintText: 'Date',
                                 border: InputBorder.none,
                                 prefixIcon: Icon(Icons.today_rounded),
@@ -199,7 +271,7 @@ class _BookingBodyState extends State<BookingBody> {
                             const CustomDivider(),
                             TextField(
                               decoration: const InputDecoration(
-                                labelText: 'Pickup Time',
+                                labelText: 'Pickup',
                                 hintText: 'Time',
                                 border: InputBorder.none,
                                 prefixIcon: Icon(Icons.access_time_rounded),
