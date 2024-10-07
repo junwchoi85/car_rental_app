@@ -72,12 +72,3 @@ class ServiceLocationsLoaded extends BookingState {
   @override
   List<Object> get props => [branches];
 }
-
-class ServiceLocationSelected extends BookingState {
-  final Branch selectedBranch;
-
-  const ServiceLocationSelected(this.selectedBranch);
-
-  @override
-  List<Object> get props => [selectedBranch];
-}

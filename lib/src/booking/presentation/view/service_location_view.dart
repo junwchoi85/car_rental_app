@@ -23,6 +23,7 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
   final List<String> _allItems = [];
   List<String> _filteredItems = [];
   final _serviceLocationController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -39,31 +40,17 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
   @override
   Widget build(BuildContext context) {
     void updateServiceLocation() {
-      final state =
-          context.read<BookingBloc>().state as ServiceLocationSelected;
-      final branch = state.selectedBranch;
-
-      final bookingEvent = widget.serviceType == ServiceType.pickup
-          ? UpdateBookingDetailEvent(pickUpBranch: branch)
-          : UpdateBookingDetailEvent(dropOffBranch: branch);
-
-      context.read<BookingBloc>().add(bookingEvent);
+      context.read<BookingBloc>().add(
+            SelectServiceLocationEvent(
+              serviceLocation: _serviceLocationController.text,
+              serviceType: widget.serviceType,
+            ),
+          );
     }
 
     void cancelSelection() {
       context.read<BookingBloc>().add(const CancelServiceLocationEvent());
       context.pop();
-    }
-
-    void selectServiceLocation(String serviceLocation) {
-      // final serviceLocation =
-      //     (context.read<BookingBloc>().state as ServiceLocationsLoaded)
-      //         .branches
-      //         .firstWhere((branch) => branch.name == locationName);
-      context.read<BookingBloc>().add(SelectServiceLocationEvent(
-            serviceLocation: serviceLocation,
-            serviceType: widget.serviceType,
-          ));
     }
 
     return BlocConsumer<BookingBloc, BookingState>(
@@ -99,11 +86,20 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
             child: Column(
               children: [
                 // Search TextField
-                TextField(
-                  controller: _serviceLocationController,
-                  decoration: InputDecoration(
-                    labelText: 'Select a ${widget.serviceType.value} location',
-                    border: const OutlineInputBorder(),
+                Form(
+                  key: formKey,
+                  child: TextFormField(
+                    controller: _serviceLocationController,
+                    decoration: InputDecoration(
+                      labelText:
+                          'Select a ${widget.serviceType.value} location',
+                      border: const OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please select a ${widget.serviceType.value} location';
+                      }
+                    },
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -119,7 +115,6 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
                               onTap: () {
                                 _serviceLocationController.text =
                                     _filteredItems[index];
-                                selectServiceLocation(_filteredItems[index]);
                                 // Optionally clear the search results
                                 // setState(() {
                                 //   _filteredItems.clear();
@@ -140,12 +135,12 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
                       backgroundColor: context.theme.primaryColor,
                       foregroundColor: context.theme.colorScheme.onPrimary,
                     ),
-                    onPressed: _serviceLocationController.text.isNotEmpty
-                        ? () {
-                            updateServiceLocation();
-                            context.pop();
-                          }
-                        : null,
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        updateServiceLocation();
+                        context.pop();
+                      }
+                    },
                     child: const Text('Select Branch'),
                   ),
                 ),

@@ -74,7 +74,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         _currentBooking =
             _currentBooking.copyWith(dropOffBranch: selectedBranch);
       }
-      emit(ServiceLocationSelected(selectedBranch));
+      emit(BookingDetailsUpdated(_currentBooking));
     }
   }
 
