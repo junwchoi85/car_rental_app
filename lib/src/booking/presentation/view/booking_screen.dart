@@ -9,8 +9,15 @@ import 'package:car_rental_app/src/booking/presentation/widget/booking_app_bar.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BookingScreen extends StatelessWidget {
+class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
+
+  @override
+  State<BookingScreen> createState() => _BookingScreenState();
+}
+
+class _BookingScreenState extends State<BookingScreen> {
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,9 @@ class BookingScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const BookingBody(),
+            BookingBody(
+              formKey: formKey,
+            ),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -48,18 +57,18 @@ class BookingScreen extends StatelessWidget {
                     backgroundColor: context.theme.primaryColor,
                     foregroundColor: context.theme.colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(4), // 각진 모양을 위해 작은 값 설정
+                      borderRadius: BorderRadius.circular(4),
                     ),
                   ),
                   onPressed: () {
-                    // Handle button press
-                    context.push(
-                      BlocProvider(
-                        create: (_) => sl<CarBloc>(),
-                        child: const CarListScreen(),
-                      ),
-                    );
+                    if (formKey.currentState!.validate()) {
+                      context.push(
+                        BlocProvider(
+                          create: (_) => sl<CarBloc>(),
+                          child: const CarListScreen(),
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     'View Available Cars',

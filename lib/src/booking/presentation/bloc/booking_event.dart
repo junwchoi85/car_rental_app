@@ -51,3 +51,7 @@ class SelectServiceLocationEvent extends BookingEvent {
   @override
   List<Object?> get props => [serviceLocation];
 }
+
+class CancelServiceLocationEvent extends BookingEvent {
+  const CancelServiceLocationEvent();
+}

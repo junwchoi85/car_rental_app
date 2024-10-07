@@ -46,12 +46,12 @@ class DatetimeUtils {
 
   static String dateNow() {
     final now = DateTime.now();
-    return "${now.month}/${now.day}";
+
+    return now.toIso8601String().split('T').first;
   }
 
   static String twoDaysFromNow() {
-    final now = DateTime.now();
-    final twoDays = now.add(const Duration(days: 2));
-    return "${twoDays.month}/${twoDays.day}";
+    final twoDays = DateTime.now().add(const Duration(days: 2));
+    return twoDays.toIso8601String().split('T').first;
   }
 }

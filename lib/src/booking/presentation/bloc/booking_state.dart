@@ -8,7 +8,18 @@ abstract class BookingState extends Equatable {
 }
 
 class BookingInitial extends BookingState {
-  const BookingInitial();
+  final Booking initialBooking;
+
+  BookingInitial()
+      : initialBooking = Booking(
+          pickUpBranch: const Branch.empty(),
+          dropOffBranch: const Branch.empty(),
+          pickUpDate: DatetimeUtils.dateNow(),
+          dropOffDate: DatetimeUtils.twoDaysFromNow(),
+          pickUpTime: '12:00 PM',
+          dropOffTime: '12:00 PM',
+        );
+  Booking get booking => initialBooking;
 }
 
 class BookingDetailsUpdated extends BookingState {

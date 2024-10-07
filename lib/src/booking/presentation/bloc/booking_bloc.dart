@@ -1,4 +1,5 @@
 import 'package:car_rental_app/core/common/enums/service_type.dart';
+import 'package:car_rental_app/core/utils/datetime_utils.dart';
 import 'package:car_rental_app/src/booking/domain/usecases/get_service_location_list.dart';
 import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:car_rental_app/src/booking/domain/entities/booking.dart';
@@ -12,14 +13,15 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
   BookingBloc({
     required GetServiceLocationList getServiceLocationList,
   })  : _getServiceLocationList = getServiceLocationList,
-        super(const BookingInitial()) {
+        super(BookingInitial()) {
     on<UpdateBookingDetailEvent>(_updateBookingDetailHandler);
     on<LoadServiceLocationsEvent>(_loadServiceLocationsHandler);
     on<SelectServiceLocationEvent>(_serviceLocationSelectedHandler);
+    on<CancelServiceLocationEvent>(_cancelServiceLocationHandler);
   }
 
   final GetServiceLocationList _getServiceLocationList;
-  Booking _currentBooking = const Booking.empty();
+  late Booking _currentBooking;
 
   Future<void> _loadServiceLocationsHandler(
     LoadServiceLocationsEvent event,
@@ -39,14 +41,20 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     UpdateBookingDetailEvent event,
     Emitter<BookingState> emit,
   ) async {
-    _currentBooking = _currentBooking.copyWith(
-      pickUpBranch: event.pickUpBranch,
-      dropOffBranch: event.dropOffBranch,
-      pickUpDate: event.pickUpDate,
-      dropOffDate: event.dropOffDate,
-      pickUpTime: event.pickUpTime,
-      dropOffTime: event.dropOffTime,
-    );
+    if (state is BookingInitial) {
+      final currentState = state as BookingInitial;
+      _currentBooking = currentState.booking;
+    } else {
+      _currentBooking = _currentBooking.copyWith(
+        pickUpBranch: event.pickUpBranch,
+        dropOffBranch: event.dropOffBranch,
+        pickUpDate: event.pickUpDate,
+        dropOffDate: event.dropOffDate,
+        pickUpTime: event.pickUpTime,
+        dropOffTime: event.dropOffTime,
+      );
+    }
+
     emit(BookingDetailsUpdated(_currentBooking));
   }
 
@@ -68,5 +76,12 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       }
       emit(ServiceLocationSelected(selectedBranch));
     }
+  }
+
+  Future<void> _cancelServiceLocationHandler(
+    CancelServiceLocationEvent event,
+    Emitter<BookingState> emit,
+  ) async {
+    emit(BookingDetailsUpdated(_currentBooking));
   }
 }

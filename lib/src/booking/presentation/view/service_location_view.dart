@@ -50,6 +50,11 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
       context.read<BookingBloc>().add(bookingEvent);
     }
 
+    void cancelSelection() {
+      context.read<BookingBloc>().add(const CancelServiceLocationEvent());
+      context.pop();
+    }
+
     void selectServiceLocation(String serviceLocation) {
       // final serviceLocation =
       //     (context.read<BookingBloc>().state as ServiceLocationsLoaded)
@@ -83,7 +88,7 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
             actions: [
               TextButton(
                 onPressed: () {
-                  context.pop();
+                  cancelSelection();
                 },
                 child: const Text('cancel'),
               ),
