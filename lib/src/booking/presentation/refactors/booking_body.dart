@@ -139,6 +139,7 @@ class _BookingBodyState extends State<BookingBody> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 12),
                 Visibility(
                   visible: _isDropOffLocationVisible,
                   child: Row(
@@ -147,7 +148,8 @@ class _BookingBodyState extends State<BookingBody> {
                         child: TextField(
                           controller: _dropOffLocationController,
                           decoration: const InputDecoration(
-                            hintText: 'Drop-off Location',
+                            labelText: 'Drop-off Location',
+                            hintText: 'Tap to select location',
                             border: OutlineInputBorder(),
                           ),
                           readOnly: true,
