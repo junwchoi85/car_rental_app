@@ -1,8 +1,6 @@
-import 'dart:ffi';
-
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
-import 'package:car_rental_app/core/resources/media_res.dart';
+import 'package:car_rental_app/src/booking/presentation/view/improve_trip_view.dart';
 import 'package:flutter/material.dart';
 
 class ChooseCoverageView extends StatefulWidget {
@@ -361,13 +359,13 @@ class _ChooseCoverageViewState extends State<ChooseCoverageView> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
                               SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
                                   onPressed: isNoProtection
                                       ? () {
-                                          // 버튼 클릭 시 실행할 코드
+                                          context.push(const ImproveTripView());
                                         }
                                       : null,
                                   style: ElevatedButton.styleFrom(
@@ -379,7 +377,12 @@ class _ChooseCoverageViewState extends State<ChooseCoverageView> {
                                           24), // 버튼의 둥근 테두리
                                     ),
                                   ),
-                                  child: const Text('continue'),
+                                  child: const Text(
+                                    'continue',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
@@ -435,7 +438,7 @@ class _ChooseCoverageViewState extends State<ChooseCoverageView> {
                       ),
                     ),
                     onPressed: () {
-                      // context.push(const ChooseCoverageView());
+                      context.push(const ImproveTripView());
                     },
                     child: const Text(
                       'Continue',
