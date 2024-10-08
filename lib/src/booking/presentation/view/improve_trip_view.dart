@@ -1,6 +1,7 @@
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/utils/strings.dart';
+import 'package:car_rental_app/src/booking/presentation/view/review_details_view.dart';
 import 'package:car_rental_app/src/booking/presentation/widget/rental_option_tiles.dart';
 import 'package:flutter/material.dart';
 
@@ -140,7 +141,7 @@ class _ImproveTripViewState extends State<ImproveTripView> {
                         ),
                       ),
                       onPressed: () {
-                        // context.push(const ImproveTripView());
+                        context.push(const ReviewDetailsView());
                       },
                       child: const Text(
                         'Continue',
@@ -165,7 +166,7 @@ class _ImproveTripViewState extends State<ImproveTripView> {
                         ),
                       ),
                       onPressed: () {
-                        // context.push(const ImproveTripView());
+                        context.push(const ReviewDetailsView());
                       },
                       child: const Text(
                         'No. Thank you.',
