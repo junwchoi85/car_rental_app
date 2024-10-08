@@ -1,5 +1,6 @@
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/common/widgets/not_found_text.dart';
+import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/car_bloc.dart';
 import 'package:car_rental_app/src/booking/presentation/view/car_detail_screen.dart';
 import 'package:car_rental_app/src/booking/presentation/widget/car_list_tiles.dart';
@@ -44,8 +45,7 @@ class CarListScreen extends StatelessWidget {
                   final car = state.cars[index];
                   return InkWell(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushNamed(CarDetailScreen.routeName, arguments: car);
+                      context.push(CarDetailScreen(car));
                     },
                     child: CarListTile(car: car),
                   );

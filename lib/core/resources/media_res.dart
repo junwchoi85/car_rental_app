@@ -22,4 +22,5 @@ class MediaRes {
   static const sampleCar = '$_baseImage/sample_car_image.png';
 
   static const travel = '$_baseImage/New-Zealand-Travel-Guide-Header.jpg';
+  static const protectCar = '$_baseImage/protectCar_image.png';
 }

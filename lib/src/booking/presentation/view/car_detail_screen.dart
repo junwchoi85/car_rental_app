@@ -1,5 +1,8 @@
+import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
+import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/src/booking/domain/entities/car.dart';
+import 'package:car_rental_app/src/booking/presentation/view/choose_coverage_view.dart';
 import 'package:flutter/material.dart';
 
 class CarDetailScreen extends StatelessWidget {
@@ -13,6 +16,7 @@ class CarDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const NestedBackButton(),
         title: Text(car.name),
       ),
       body: Column(
@@ -53,6 +57,29 @@ class CarDetailScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: context.theme.primaryColor,
+                  foregroundColor: context.theme.colorScheme.onPrimary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  context.push(const ChooseCoverageView());
+                },
+                child: const Text(
+                  'Continue',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
             ),
           ),
         ],

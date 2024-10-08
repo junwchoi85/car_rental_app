@@ -57,7 +57,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     backgroundColor: context.theme.primaryColor,
                     foregroundColor: context.theme.colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   onPressed: () {

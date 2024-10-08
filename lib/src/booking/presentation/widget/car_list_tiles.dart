@@ -45,7 +45,7 @@ class CarListTile extends StatelessWidget {
                       vertical: 10,
                     ),
                     child: SizedBox(
-                      child: Container(
+                      child: SizedBox(
                         //   color: Colors.grey.withOpacity(.5),
                         height: 50,
                         child: Column(
