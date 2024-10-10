@@ -9,6 +9,7 @@ class MediaRes {
 
   static const pageUnderConstruction =
       '$_baseLottie/page_under_construction.json';
+  static const bookingSuccessful = '$_baseLottie/booking_successful.json';
   static const authGradientBackground =
       '$_baseImage/auth_gradient_background.png';
   static const defaultGradientBackground =

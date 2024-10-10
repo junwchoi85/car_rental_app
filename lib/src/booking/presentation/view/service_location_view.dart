@@ -135,6 +135,9 @@ class _ServiceLocationViewState extends State<ServiceLocationView> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: context.theme.primaryColor,
                       foregroundColor: context.theme.colorScheme.onPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {

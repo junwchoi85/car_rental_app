@@ -8,11 +8,15 @@ class CoreUtils {
       ..removeCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(
-            message,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          content: Container(
+            padding: const EdgeInsets.all(8),
+            height: 80,
+            child: Text(
+              message,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           behavior: SnackBarBehavior.floating,

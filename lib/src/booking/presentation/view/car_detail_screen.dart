@@ -1,9 +1,12 @@
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
+import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/src/booking/domain/entities/car.dart';
+import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
 import 'package:car_rental_app/src/booking/presentation/view/choose_coverage_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CarDetailScreen extends StatelessWidget {
   const CarDetailScreen(this.car, {super.key});
@@ -73,7 +76,13 @@ class CarDetailScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  context.push(const ChooseCoverageView());
+                  context.read<BookingBloc>().add(SelectCarEvent(car: car));
+                  context.push(
+                    BlocProvider.value(
+                      value: sl<BookingBloc>(),
+                      child: const ChooseCoverageView(),
+                    ),
+                  );
                 },
                 child: const Text(
                   'Continue',

@@ -55,3 +55,22 @@ class SelectServiceLocationEvent extends BookingEvent {
 class CancelServiceLocationEvent extends BookingEvent {
   const CancelServiceLocationEvent();
 }
+
+class SelectCarEvent extends BookingEvent {
+  const SelectCarEvent({
+    required this.car,
+  });
+
+  final Car car;
+
+  @override
+  List<Object?> get props => [car];
+}
+
+class ChooseOptionsEvent extends BookingEvent {
+  const ChooseOptionsEvent();
+}
+
+class ConfirmBookingEvent extends BookingEvent {
+  const ConfirmBookingEvent();
+}

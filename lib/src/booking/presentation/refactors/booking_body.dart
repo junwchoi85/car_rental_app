@@ -249,6 +249,16 @@ class _BookingBodyState extends State<BookingBody> {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'This field is required';
+                                  } else if (value.compareTo(DateTime.now()
+                                          .toIso8601String()
+                                          .split('T')
+                                          .first) <
+                                      0) {
+                                    return 'Pick-up date cannot be before today';
+                                  } else if (value.compareTo(
+                                          _dropOffDateController.text) >
+                                      0) {
+                                    return 'Pick-up date cannot be after drop-off date';
                                   }
                                   return null;
                                 },
@@ -321,6 +331,13 @@ class _BookingBodyState extends State<BookingBody> {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'This field is required';
+                                  } else if (value ==
+                                      _pickUpDateController.text) {
+                                    return 'Drop-off date cannot be the same as pick-up date';
+                                  } else if (value.compareTo(
+                                          _pickUpDateController.text) <
+                                      0) {
+                                    return 'Drop-off date cannot be before pick-up date';
                                   }
                                   return null;
                                 },

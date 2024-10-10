@@ -8,6 +8,7 @@ class BookingModel extends Booking {
     required super.dropOffDate,
     required super.pickUpTime,
     required super.dropOffTime,
+    required super.car,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -18,6 +19,7 @@ class BookingModel extends Booking {
       dropOffDate: json['dropOffDate'],
       pickUpTime: json['pickUpTime'],
       dropOffTime: json['dropOffTime'],
+      car: json['car'],
     );
   }
 
@@ -29,6 +31,7 @@ class BookingModel extends Booking {
       'dropOffDate': dropOffDate,
       'pickUpTime': pickUpTime,
       'dropOffTime': dropOffTime,
+      'car': car,
     };
   }
 }

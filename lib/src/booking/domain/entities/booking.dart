@@ -1,15 +1,8 @@
+import 'package:car_rental_app/src/booking/domain/entities/car.dart';
 import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:equatable/equatable.dart';
 
 class Booking extends Equatable {
-  // const Booking.empty()
-  //     : pickUpBranch = const Branch.empty(),
-  //       dropOffBranch = const Branch.empty(),
-  //       pickUpDate = '',
-  //       dropOffDate = '',
-  //       pickUpTime = '',
-  //       dropOffTime = '';
-
   const Booking({
     required this.pickUpBranch,
     required this.dropOffBranch,
@@ -17,6 +10,7 @@ class Booking extends Equatable {
     required this.dropOffDate,
     required this.pickUpTime,
     required this.dropOffTime,
+    required this.car,
   });
 
   final Branch pickUpBranch;
@@ -25,6 +19,7 @@ class Booking extends Equatable {
   final String dropOffDate;
   final String pickUpTime;
   final String dropOffTime;
+  final Car car;
 
   @override
   List<Object?> get props => [
@@ -34,6 +29,7 @@ class Booking extends Equatable {
         dropOffDate,
         pickUpTime,
         dropOffTime,
+        car,
       ];
 
   Booking copyWith({
@@ -43,6 +39,7 @@ class Booking extends Equatable {
     String? dropOffDate,
     String? pickUpTime,
     String? dropOffTime,
+    Car? car,
   }) {
     return Booking(
       pickUpBranch: pickUpBranch ?? this.pickUpBranch,
@@ -51,6 +48,7 @@ class Booking extends Equatable {
       dropOffDate: dropOffDate ?? this.dropOffDate,
       pickUpTime: pickUpTime ?? this.pickUpTime,
       dropOffTime: dropOffTime ?? this.dropOffTime,
+      car: car ?? this.car,
     );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:car_rental_app/core/common/widgets/nested_back_button.dart';
 import 'package:car_rental_app/core/extensions/context_extension.dart';
+import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/core/utils/strings.dart';
+import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
 import 'package:car_rental_app/src/booking/presentation/view/review_details_view.dart';
 import 'package:car_rental_app/src/booking/presentation/widget/rental_option_tiles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ImproveTripView extends StatefulWidget {
   const ImproveTripView({super.key});
@@ -166,6 +169,9 @@ class _ImproveTripViewState extends State<ImproveTripView> {
                         ),
                       ),
                       onPressed: () {
+                        context
+                            .read<BookingBloc>()
+                            .add(const ChooseOptionsEvent());
                         context.push(const ReviewDetailsView());
                       },
                       child: const Text(

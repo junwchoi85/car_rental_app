@@ -1,6 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class Car extends Equatable {
+  const Car.empty()
+      : carCode = '',
+        name = '',
+        modelYear = '',
+        passenger = 0,
+        transmission = '',
+        luggageLarge = 0,
+        luggageSmall = 0,
+        engine = '',
+        fuel = '',
+        status = '';
+
   const Car({
     required this.carCode,
     required this.name,

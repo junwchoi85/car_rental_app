@@ -1,5 +1,6 @@
 import 'package:car_rental_app/core/common/enums/service_type.dart';
 import 'package:car_rental_app/core/utils/datetime_utils.dart';
+import 'package:car_rental_app/src/booking/domain/entities/car.dart';
 import 'package:car_rental_app/src/booking/domain/usecases/get_service_location_list.dart';
 import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:car_rental_app/src/booking/domain/entities/booking.dart';
@@ -14,10 +15,16 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     required GetServiceLocationList getServiceLocationList,
   })  : _getServiceLocationList = getServiceLocationList,
         super(BookingInitial()) {
+    // on<BookingEvent>((event, emit) {
+    //   emit(const BookingLoading());
+    // });
     on<UpdateBookingDetailEvent>(_updateBookingDetailHandler);
     on<LoadServiceLocationsEvent>(_loadServiceLocationsHandler);
     on<SelectServiceLocationEvent>(_serviceLocationSelectedHandler);
     on<CancelServiceLocationEvent>(_cancelServiceLocationHandler);
+    on<SelectCarEvent>(_selectCarHandler);
+    on<ChooseOptionsEvent>(_chooseOptionsHandler);
+    on<ConfirmBookingEvent>(_confirmBookingHandler);
   }
 
   final GetServiceLocationList _getServiceLocationList;
@@ -83,5 +90,27 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     Emitter<BookingState> emit,
   ) async {
     emit(BookingDetailsUpdated(_currentBooking));
+  }
+
+  Future<void> _selectCarHandler(
+    SelectCarEvent event,
+    Emitter<BookingState> emit,
+  ) async {
+    _currentBooking = _currentBooking.copyWith(car: event.car);
+    emit(BookingDetailsUpdated(_currentBooking));
+  }
+
+  Future<void> _chooseOptionsHandler(
+    ChooseOptionsEvent event,
+    Emitter<BookingState> emit,
+  ) async {
+    emit(BookingDetailsUpdated(_currentBooking));
+  }
+
+  Future<void> _confirmBookingHandler(
+    ConfirmBookingEvent event,
+    Emitter<BookingState> emit,
+  ) async {
+    emit(const BookingConfirmed());
   }
 }

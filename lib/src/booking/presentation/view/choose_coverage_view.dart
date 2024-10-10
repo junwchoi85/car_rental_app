@@ -256,15 +256,6 @@ class _ChooseCoverageViewState extends State<ChooseCoverageView> {
                       ),
                     ),
                   ),
-                  // Positioned(
-                  //   top: 12,
-                  //   right: 24,
-                  //   child: Image.asset(
-                  //     MediaRes.protectCar,
-                  //     width: 80, // Adjust the width as needed
-                  //     height: 80, // Adjust the height as needed
-                  //   ),
-                  // ),
                 ],
               ),
             ),

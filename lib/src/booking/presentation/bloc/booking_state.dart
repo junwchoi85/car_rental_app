@@ -7,6 +7,10 @@ abstract class BookingState extends Equatable {
   List<Object> get props => [];
 }
 
+class BookingLoading extends BookingState {
+  const BookingLoading();
+}
+
 class BookingInitial extends BookingState {
   final Booking initialBooking;
 
@@ -18,6 +22,7 @@ class BookingInitial extends BookingState {
           dropOffDate: DatetimeUtils.twoDaysFromNow(),
           pickUpTime: '12:00 PM',
           dropOffTime: '12:00 PM',
+          car: const Car.empty(),
         );
   Booking get booking => initialBooking;
 }
@@ -43,6 +48,7 @@ class BookingDetailsUpdated extends BookingState {
         dropOffDate: dropOffDate ?? carRental.dropOffDate,
         pickUpTime: pickUpTime ?? carRental.pickUpTime,
         dropOffTime: dropOffTime ?? carRental.dropOffTime,
+        car: carRental.car,
       ),
     );
   }
@@ -71,4 +77,17 @@ class ServiceLocationsLoaded extends BookingState {
 
   @override
   List<Object> get props => [branches];
+}
+
+class BookingConfirmed extends BookingState {
+  const BookingConfirmed();
+}
+
+class BookingError extends BookingState {
+  final String message;
+
+  const BookingError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
