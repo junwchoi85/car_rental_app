@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:car_rental_app/core/errors/exception.dart';
 import 'package:car_rental_app/core/utils/api_constants.dart';
+import 'package:car_rental_app/src/booking/data/models/booking_model.dart';
+import 'package:car_rental_app/src/booking/domain/entities/booking.dart';
 import 'package:car_rental_app/src/branch/data/models/branch_model.dart';
 import 'package:car_rental_app/src/booking/data/models/car_model.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +13,7 @@ abstract class BookingRemoteDataSource {
   Future<List<CarModel>> getCarList();
 
   Future<List<BranchModel>> getBranchList();
+  Future<void> bookCar({required Booking booking});
 }
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
@@ -94,5 +97,25 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
     ];
 
     return Future.value(branchList);
+  }
+
+  @override
+  Future<void> bookCar({required Booking booking}) async {
+    final response = await client.post(
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.bookCar),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: (booking as BookingModel).toJson(),
+    );
+
+    if (response.statusCode == 200) {
+      return Future.value();
+    } else {
+      throw ServerException(
+        message: 'Failed to book car',
+        statusCode: response.statusCode.toString(),
+      );
+    }
   }
 }

@@ -54,6 +54,7 @@ Future<void> _initAuth() async {
         authClient: sl(),
         cloudStoreClient: sl(),
         dbClient: sl(),
+        client: sl(),
       ),
     )
     ..registerLazySingleton(() => FirebaseAuth.instance)

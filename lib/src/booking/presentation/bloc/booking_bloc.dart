@@ -25,6 +25,9 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<SelectCarEvent>(_selectCarHandler);
     on<ChooseOptionsEvent>(_chooseOptionsHandler);
     on<ConfirmBookingEvent>(_confirmBookingHandler);
+    on<ResetBookingEvent>((event, emit) {
+      emit(BookingInitial());
+    });
   }
 
   final GetServiceLocationList _getServiceLocationList;

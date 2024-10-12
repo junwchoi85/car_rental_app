@@ -74,3 +74,7 @@ class ChooseOptionsEvent extends BookingEvent {
 class ConfirmBookingEvent extends BookingEvent {
   const ConfirmBookingEvent();
 }
+
+class ResetBookingEvent extends BookingEvent {
+  const ResetBookingEvent();
+}

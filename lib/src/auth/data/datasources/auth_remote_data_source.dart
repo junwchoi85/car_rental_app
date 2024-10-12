@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:car_rental_app/core/common/enums/update_user.dart';
 import 'package:car_rental_app/core/errors/exception.dart';
+import 'package:car_rental_app/core/utils/api_constants.dart';
 import 'package:car_rental_app/core/utils/constants.dart';
 import 'package:car_rental_app/core/utils/typedefs.dart';
 import 'package:car_rental_app/src/auth/data/models/user_model.dart';
@@ -10,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 
 abstract class AuthRemoteDataSource {
   const AuthRemoteDataSource();
@@ -38,13 +40,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required FirebaseAuth authClient,
     required FirebaseFirestore cloudStoreClient,
     required FirebaseStorage dbClient,
+    required http.Client client,
   })  : _authClient = authClient,
         _cloudStoreClient = cloudStoreClient,
-        _dbClient = dbClient;
+        _dbClient = dbClient,
+        _client = client;
 
   final FirebaseAuth _authClient;
   final FirebaseFirestore _cloudStoreClient;
   final FirebaseStorage _dbClient;
+  final http.Client _client;
 
   @override
   Future<void> forgotPassword(String email) async {
@@ -134,6 +139,35 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw ServerException(
         message: e.toString(),
         statusCode: '505',
+      );
+    }
+
+    creteUser(email, password, 'username');
+  }
+
+  Future<void> creteUser(
+    String email,
+    String password,
+    String username,
+  ) async {
+    final response = await _client.post(
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.createUser),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'email': email,
+        'password': password,
+        'username': username,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return Future.value();
+    } else {
+      throw ServerException(
+        message: 'Failed create user',
+        statusCode: response.statusCode.toString(),
       );
     }
   }

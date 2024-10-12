@@ -1,6 +1,8 @@
 import 'package:car_rental_app/core/extensions/context_extension.dart';
 import 'package:car_rental_app/core/resources/media_res.dart';
+import 'package:car_rental_app/src/booking/presentation/bloc/booking_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class BookingConfirmedView extends StatelessWidget {
@@ -48,6 +50,9 @@ class BookingConfirmedView extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      context
+                          .read<BookingBloc>()
+                          .add(const ResetBookingEvent());
                       context.popToRoot();
                     },
                     child: const Text(
