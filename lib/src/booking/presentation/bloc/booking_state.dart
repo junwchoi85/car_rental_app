@@ -23,6 +23,7 @@ class BookingInitial extends BookingState {
           pickUpTime: '12:00 PM',
           dropOffTime: '12:00 PM',
           car: const Car.empty(),
+          vehicle: const Vehicle.empty(),
         );
   Booking get booking => initialBooking;
 }
@@ -49,6 +50,7 @@ class BookingDetailsUpdated extends BookingState {
         pickUpTime: pickUpTime ?? carRental.pickUpTime,
         dropOffTime: dropOffTime ?? carRental.dropOffTime,
         car: carRental.car,
+        vehicle: carRental.vehicle,
       ),
     );
   }

@@ -1,8 +1,12 @@
 import 'package:car_rental_app/core/common/app/providers/tab_navigator.dart';
 import 'package:car_rental_app/core/common/views/persistent_view.dart';
+import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/src/booking/presentation/view/booking_screen.dart';
+import 'package:car_rental_app/src/history/presentation/bloc/history_bloc.dart';
+import 'package:car_rental_app/src/history/presentation/view/history_screen.dart';
 import 'package:car_rental_app/src/profile/presentation/views/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 /// A class that represents a dashboard controller
@@ -22,7 +26,14 @@ class DashboardController extends ChangeNotifier {
       child: const PersistentView(),
     ),
     ChangeNotifierProvider(
-      create: (_) => TabNavigator(TabItem(child: const Placeholder())),
+      create: (_) => TabNavigator(
+        TabItem(
+          child: BlocProvider(
+            create: (_) => sl<HistoryBloc>(),
+            child: const HistoryScreen(),
+          ),
+        ),
+      ),
       child: const PersistentView(),
     ),
     ChangeNotifierProvider(

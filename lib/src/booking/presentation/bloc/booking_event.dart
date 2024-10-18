@@ -78,3 +78,14 @@ class ConfirmBookingEvent extends BookingEvent {
 class ResetBookingEvent extends BookingEvent {
   const ResetBookingEvent();
 }
+
+class SelectVehicleEvent extends BookingEvent {
+  const SelectVehicleEvent({
+    required this.vehicle,
+  });
+
+  final Vehicle vehicle;
+
+  @override
+  List<Object?> get props => [vehicle];
+}

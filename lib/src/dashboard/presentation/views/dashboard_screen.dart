@@ -51,24 +51,24 @@ class _DashboardState extends State<Dashboard> {
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.home,
+                    Icons.directions_car_filled_outlined,
                     color: controller.currentIndex == 0
                         ? context.theme.primaryColor
                         : Colors.grey,
                     // size: controller.currentIndex == 0 ? 30 : 24,
                   ),
-                  label: 'Home',
+                  label: 'Booking',
                   backgroundColor: Colors.white,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.description_rounded,
+                    Icons.book_outlined,
                     color: controller.currentIndex == 1
                         ? context.theme.primaryColor
                         : Colors.grey,
                     // size: controller.currentIndex == 1 ? 30 : 24,
                   ),
-                  label: 'Home',
+                  label: 'History',
                   backgroundColor: Colors.white,
                 ),
                 BottomNavigationBarItem(

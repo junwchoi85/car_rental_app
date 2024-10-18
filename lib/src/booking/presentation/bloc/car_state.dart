@@ -32,3 +32,12 @@ class CarError extends CarState {
   @override
   List<Object> get props => [message];
 }
+
+class VehicleLoaded extends CarState {
+  final List<Vehicle> vehicles;
+
+  const VehicleLoaded(this.vehicles);
+
+  @override
+  List<Object> get props => [vehicles];
+}

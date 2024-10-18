@@ -10,3 +10,7 @@ abstract class CarEvent extends Equatable {
 class LoadCarsEvent extends CarEvent {
   const LoadCarsEvent();
 }
+
+class LoadVehiclesEvent extends CarEvent {
+  const LoadVehiclesEvent();
+}
