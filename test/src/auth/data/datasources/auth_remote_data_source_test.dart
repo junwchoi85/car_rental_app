@@ -224,7 +224,7 @@ void main() {
 
         final call = dataSource.signUp(
           email: tEmail,
-          fullName: tFullName,
+          userName: tFullName,
           password: tPassword,
         );
 
@@ -264,7 +264,7 @@ void main() {
           () => call(
             email: tEmail,
             password: tPassword,
-            fullName: tFullName,
+            userName: tFullName,
           ),
           throwsA(isA<ServerException>()),
         );

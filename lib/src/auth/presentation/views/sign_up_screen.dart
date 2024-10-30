@@ -114,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   SignUpEvent(
                                     email: emailController.text.trim(),
                                     password: passwordController.text.trim(),
-                                    name: fullNameController.text.trim(),
+                                    userName: fullNameController.text.trim(),
                                   ),
                                 );
                           }

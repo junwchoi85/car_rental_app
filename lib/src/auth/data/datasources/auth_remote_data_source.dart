@@ -26,7 +26,7 @@ abstract class AuthRemoteDataSource {
   Future<void> signUp({
     required String email,
     required String password,
-    required String fullName,
+    required String userName,
   });
 
   Future<void> updateUser({
@@ -119,14 +119,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<void> signUp({
     required String email,
     required String password,
-    required String fullName,
+    required String userName,
   }) async {
     try {
       final userCredential = await _authClient.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await userCredential.user!.updateDisplayName(fullName);
+      await userCredential.user!.updateDisplayName(userName);
       await userCredential.user!.updatePhotoURL(kDefaultAvatar);
       await _setUserData(_authClient.currentUser!, email);
     } on FirebaseAuthException catch (e) {
@@ -142,7 +142,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
     }
 
-    creteUser(email, password, 'username');
+    creteUser(email, password, userName);
   }
 
   Future<void> creteUser(
