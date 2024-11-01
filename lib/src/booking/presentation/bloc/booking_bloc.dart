@@ -1,6 +1,8 @@
 import 'package:car_rental_app/core/common/enums/service_type.dart';
 import 'package:car_rental_app/core/utils/datetime_utils.dart';
 import 'package:car_rental_app/src/booking/domain/entities/car.dart';
+import 'package:car_rental_app/src/booking/domain/entities/vehicle.dart';
+import 'package:car_rental_app/src/booking/domain/usecases/book_a_car.dart';
 import 'package:car_rental_app/src/booking/domain/usecases/get_service_location_list.dart';
 import 'package:car_rental_app/src/branch/domain/entities/branch.dart';
 import 'package:car_rental_app/src/booking/domain/entities/booking.dart';
@@ -13,7 +15,9 @@ part 'booking_state.dart';
 class BookingBloc extends Bloc<BookingEvent, BookingState> {
   BookingBloc({
     required GetServiceLocationList getServiceLocationList,
+    required BookACar bookACar,
   })  : _getServiceLocationList = getServiceLocationList,
+        _bookACar = bookACar,
         super(BookingInitial()) {
     // on<BookingEvent>((event, emit) {
     //   emit(const BookingLoading());
@@ -25,12 +29,15 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<SelectCarEvent>(_selectCarHandler);
     on<ChooseOptionsEvent>(_chooseOptionsHandler);
     on<ConfirmBookingEvent>(_confirmBookingHandler);
-    on<ResetBookingEvent>((event, emit) {
+    on<SelectVehicleEvent>(_selectVehicleHandler);
+    on<ResetBookingEvent>((event, emit) async {
+      await Future.delayed(const Duration(seconds: 1));
       emit(BookingInitial());
     });
   }
 
   final GetServiceLocationList _getServiceLocationList;
+  final BookACar _bookACar;
   late Booking _currentBooking;
 
   Future<void> _loadServiceLocationsHandler(
@@ -103,6 +110,14 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     emit(BookingDetailsUpdated(_currentBooking));
   }
 
+  Future<void> _selectVehicleHandler(
+    SelectVehicleEvent event,
+    Emitter<BookingState> emit,
+  ) async {
+    _currentBooking = _currentBooking.copyWith(vehicle: event.vehicle);
+    emit(BookingDetailsUpdated(_currentBooking));
+  }
+
   Future<void> _chooseOptionsHandler(
     ChooseOptionsEvent event,
     Emitter<BookingState> emit,
@@ -114,6 +129,10 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     ConfirmBookingEvent event,
     Emitter<BookingState> emit,
   ) async {
-    emit(const BookingConfirmed());
+    final result = await _bookACar(_currentBooking);
+    result.fold(
+      (failure) => emit(BookingError(failure.errorMessage)),
+      (_) => emit(const BookingConfirmed()),
+    );
   }
 }

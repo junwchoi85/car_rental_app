@@ -4,7 +4,7 @@ import 'package:car_rental_app/core/resources/media_res.dart';
 import 'package:car_rental_app/core/services/injection_container.dart';
 import 'package:car_rental_app/src/booking/presentation/bloc/car_bloc.dart';
 import 'package:car_rental_app/src/booking/presentation/refactors/booking_body.dart';
-import 'package:car_rental_app/src/booking/presentation/view/car_list_screen.dart';
+import 'package:car_rental_app/src/booking/presentation/view/vehicle_list_screen.dart';
 import 'package:car_rental_app/src/booking/presentation/widget/booking_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +65,8 @@ class _BookingScreenState extends State<BookingScreen> {
                       context.push(
                         BlocProvider(
                           create: (_) => sl<CarBloc>(),
-                          child: const CarListScreen(),
+                          // child: const CarListScreen(),
+                          child: const VehicleListScreen(),
                         ),
                       );
                     }

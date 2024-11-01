@@ -1,3 +1,4 @@
+import 'package:car_rental_app/src/auth/data/models/user_model.dart';
 import 'package:car_rental_app/src/booking/domain/entities/booking.dart';
 
 class BookingModel extends Booking {
@@ -9,7 +10,11 @@ class BookingModel extends Booking {
     required super.pickUpTime,
     required super.dropOffTime,
     required super.car,
+    required this.user,
+    required super.vehicle,
   });
+
+  final LocalUserModel user;
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
     return BookingModel(
@@ -20,6 +25,8 @@ class BookingModel extends Booking {
       pickUpTime: json['pickUpTime'],
       dropOffTime: json['dropOffTime'],
       car: json['car'],
+      user: json['user'],
+      vehicle: json['vehicle'],
     );
   }
 
@@ -32,6 +39,8 @@ class BookingModel extends Booking {
       'pickUpTime': pickUpTime,
       'dropOffTime': dropOffTime,
       'car': car,
+      'user': user,
+      'vehicle': vehicle,
     };
   }
 }

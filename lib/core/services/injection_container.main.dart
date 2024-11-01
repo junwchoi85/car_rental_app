@@ -10,6 +10,7 @@ Future<void> init() async {
   await _initHttp();
   await _initBooking();
   await _initCarListing();
+  await _initHistory();
 }
 
 Future<void> _onBoardingInit() async {
@@ -67,9 +68,11 @@ Future<void> _initCarListing() async {
     ..registerFactory(
       () => CarBloc(
         getCarList: sl(),
+        getVehicleList: sl(),
       ),
     )
-    ..registerLazySingleton(() => GetCarList(sl()));
+    ..registerLazySingleton(() => GetCarList(sl()))
+    ..registerLazySingleton(() => GetVehicleList(sl()));
   // ..registerLazySingleton<BookingRepository>(
   //     () => BookingRepositoryImpl(sl()))
   // ..registerLazySingleton<BookingRemoteDataSource>(
@@ -84,10 +87,12 @@ Future<void> _initBooking() async {
     ..registerFactory(
       () => BookingBloc(
         getServiceLocationList: sl(),
+        bookACar: sl(),
       ),
     )
     // usecases
     ..registerLazySingleton(() => GetServiceLocationList(sl()))
+    ..registerLazySingleton(() => BookACar(sl()))
     // repositories
     ..registerLazySingleton<BookingRepository>(
         () => BookingRepositoryImpl(sl()))
@@ -95,6 +100,25 @@ Future<void> _initBooking() async {
     ..registerLazySingleton<BookingRemoteDataSource>(
       () => BookingRemoteDataSourceImpl(
         client: sl(),
+        auth: sl(),
+      ),
+    );
+}
+
+Future<void> _initHistory() async {
+  sl
+    ..registerFactory(
+      () => HistoryBloc(
+        getHistoryList: sl(),
+      ),
+    )
+    ..registerLazySingleton(() => GetHistoryList(repository: sl()))
+    ..registerLazySingleton<HistoryRepository>(
+        () => HistoryRepositoryImpl(remoteDataSource: sl()))
+    ..registerLazySingleton<HistoryRemoteDataSource>(
+      () => HistoryRemoteDataSourceImpl(
+        client: sl(),
+        auth: sl(),
       ),
     );
 }

@@ -2,24 +2,30 @@ import 'dart:convert';
 
 import 'package:car_rental_app/core/errors/exception.dart';
 import 'package:car_rental_app/core/utils/api_constants.dart';
-import 'package:car_rental_app/src/booking/data/models/booking_model.dart';
+import 'package:car_rental_app/core/utils/datasource_utils.dart';
+import 'package:car_rental_app/src/booking/data/models/car_model.dart';
+import 'package:car_rental_app/src/booking/data/models/vehicle_model.dart';
 import 'package:car_rental_app/src/booking/domain/entities/booking.dart';
 import 'package:car_rental_app/src/branch/data/models/branch_model.dart';
-import 'package:car_rental_app/src/booking/data/models/car_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 abstract class BookingRemoteDataSource {
   /// Fetches the list of cars from the remote API.
   Future<List<CarModel>> getCarList();
-
+  Future<List<VehicleModel>> getVehicleList();
   Future<List<BranchModel>> getBranchList();
   Future<void> bookCar({required Booking booking});
 }
 
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
-  final http.Client client;
+  BookingRemoteDataSourceImpl({
+    required this.client,
+    required FirebaseAuth auth,
+  }) : _auth = auth;
 
-  BookingRemoteDataSourceImpl({required this.client});
+  final http.Client client;
+  final FirebaseAuth _auth;
 
   @override
   Future<List<CarModel>> getCarList() async {
@@ -36,6 +42,26 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
     } else {
       throw ServerException(
         message: 'Failed to load cars',
+        statusCode: response.statusCode.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<List<VehicleModel>> getVehicleList() async {
+    final response = await client.get(
+      Uri.parse(ApiConstants.baseUrl + ApiConstants.vehicleList),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body);
+      return jsonData.map((json) => VehicleModel.fromJson(json)).toList();
+    } else {
+      throw ServerException(
+        message: 'Failed to load vehicles',
         statusCode: response.statusCode.toString(),
       );
     }
@@ -101,20 +127,50 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
 
   @override
   Future<void> bookCar({required Booking booking}) async {
-    final response = await client.post(
-      Uri.parse(ApiConstants.baseUrl + ApiConstants.bookCar),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: (booking as BookingModel).toJson(),
-    );
+    try {
+      await DataSourceUtils.authorizeUser(_auth);
+      final user = _auth.currentUser!;
 
-    if (response.statusCode == 200) {
-      return Future.value();
-    } else {
+      final response = await client.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.bookCar),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(
+          {
+            'pickUpBranch': booking.pickUpBranch.branchCode,
+            'dropOffBranch': booking.dropOffBranch.branchCode,
+            'pickUpDate': booking.pickUpDate,
+            'dropOffDate': booking.dropOffDate,
+            'pickUpTime': booking.pickUpTime,
+            'dropOffTime': booking.dropOffTime,
+            // 'carCode': booking.car.carCode,
+            'userEmail': user.email,
+            'vehicleCode': booking.vehicle.vehicleCode,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        // TODO: Implement the response handling
+        return;
+      } else {
+        throw ServerException(
+          message: 'Failed to book car',
+          statusCode: response.statusCode.toString(),
+        );
+      }
+    } on FirebaseException catch (e) {
       throw ServerException(
-        message: 'Failed to book car',
-        statusCode: response.statusCode.toString(),
+        message: e.message ?? 'Unknown error',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '500',
       );
     }
   }
