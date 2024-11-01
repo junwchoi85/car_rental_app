@@ -30,7 +30,19 @@ class HistoryScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           } else if ((state is HistoryLoaded && state.historyList.isEmpty) ||
               state is HistoryError) {
-            return const NotFoundText('No history available.');
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<HistoryBloc>().add(const LoadHistoryEvent());
+              },
+              child: ListView.builder(
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return const NotFoundText('No history available.');
+                },
+              ),
+              // child: const Center(child: Text('No history available.')),
+              // child: const NotFoundText('No history available.'),
+            );
           } else if (state is HistoryLoaded) {
             return RefreshIndicator(
               onRefresh: () async {
