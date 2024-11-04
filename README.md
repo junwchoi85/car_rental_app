@@ -1,7 +1,7 @@
 # Car Rental App
 
 ## Project Description
-A cross-platform mobile application developed in Flutter, providing a seamless car rental experience. This app offers a user-friendly interface, real-time booking, and secure data management, designed to meet the modern demands of users and enhance the client’s competitive edge in the car rental market.
+This project is a cross-platform mobile application developed in Flutter developed as part of the MSE800 Software Engineering course at Yoobee College. This app offers a user-friendly interface, real-time booking, and secure data management, designed to meet the modern demands of users and enhance the client’s competitive edge in the car rental market.
 
 ## Features
 - User Registration & Authentication: Secure login and registration with future OAuth2 integration for added security.
